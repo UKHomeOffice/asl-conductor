@@ -1,0 +1,25 @@
+version: '3'
+services:
+{{#services}}
+  {{name}}:
+    image: {{image}}
+    {{#env.length}}
+    environment:
+    {{#env}}
+      {{key}}: {{value}}
+    {{/env}}
+    {{/env.length}}
+    {{#links.length}}
+    links:
+    {{#links}}
+      - {{.}}
+    {{/links}}
+    {{/links.length}}
+    {{#port}}
+    ports:
+      - "{{port}}:{{port}}"
+    {{/port}}
+    {{#run}}
+    command: "{{run}}"
+    {{/run}}
+{{/services}}

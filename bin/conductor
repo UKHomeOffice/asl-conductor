@@ -1,0 +1,14 @@
+#! /usr/bin/env node
+
+const path = require('path');
+const args = require('minimist')(process.argv.slice(2));
+
+const conductor = require('../lib/conductor');
+
+const file = args._[0] || '.conductor.json';
+const config = require(path.resolve(process.cwd(), file));
+
+args.env = args.env || '.env';
+args.out = args.out || 'docker-compose.yml';
+
+conductor(config, args);

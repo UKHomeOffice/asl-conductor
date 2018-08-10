@@ -1,0 +1,19 @@
+{
+  "name": "conductor",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "description": "",
+  "dependencies": {
+    "dotenv": "^6.0.0",
+    "lodash": "^4.17.10",
+    "minimist": "^1.2.0",
+    "mustache": "^2.3.1",
+    "r2": "^2.0.1"
+  }
+}

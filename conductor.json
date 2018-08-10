@@ -1,0 +1,140 @@
+{
+  "services": [
+    {
+      "name": "asl",
+      "port": 8080,
+      "links": [
+        "redis",
+        "asl-public-api"
+      ],
+      "env": {
+        "REDIS_HOST": "{{services.redis.host}}",
+        "SESSION_SECRET": "{{env.SESSION_SECRET}}",
+        "KEYCLOAK_REALM": "{{env.KEYCLOAK_REALM}}",
+        "KEYCLOAK_URL": "{{env.KEYCLOAK_URL}}",
+        "KEYCLOAK_CLIENT": "{{env.KEYCLOAK_CLIENT}}",
+        "KEYCLOAK_SECRET": "{{env.KEYCLOAK_SECRET}}",
+        "API_URL": "http://{{services.asl-public-api.host}}:{{services.asl-public-api.port}}"
+      }
+    },
+    {
+      "name": "asl-public-api",
+      "port": 8081,
+      "links": [
+        "postgres",
+        "asl-permissions",
+        "asl-workflow"
+      ],
+      "env": {
+        "WORKFLOW_SERVICE": "http://{{services.asl-workflow.host}}:{{services.asl-workflow.port}}",
+        "PERMISSIONS_SERVICE": "http://{{services.asl-permissions.host}}:{{services.asl-permissions.port}}",
+        "DATABASE_NAME": "{{env.DATABASE_NAME}}",
+        "DATABASE_USERNAME": "{{env.DATABASE_USERNAME}}",
+        "DATABASE_HOST": "{{services.postgres.host}}",
+        "SQS_REGION": "{{env.SQS_REGION}}",
+        "SQS_ACCESS_KEY": "{{env.SQS_ACCESS_KEY}}",
+        "SQS_SECRET": "{{env.SQS_SECRET}}",
+        "SQS_URL": "{{env.SQS_URL}}",
+        "KEYCLOAK_REALM": "{{env.KEYCLOAK_REALM}}",
+        "KEYCLOAK_URL": "{{env.KEYCLOAK_URL}}",
+        "KEYCLOAK_CLIENT": "{{env.KEYCLOAK_CLIENT}}",
+        "KEYCLOAK_SECRET": "{{env.KEYCLOAK_SECRET}}"
+      }
+    },
+    {
+      "name": "asl-permissions",
+      "port": 8082,
+      "links": [
+        "postgres"
+      ],
+      "env": {
+        "DATABASE_NAME": "{{env.DATABASE_NAME}}",
+        "DATABASE_USERNAME": "{{env.DATABASE_USERNAME}}",
+        "DATABASE_HOST": "{{services.postgres.host}}",
+        "KEYCLOAK_REALM": "{{env.KEYCLOAK_REALM}}",
+        "KEYCLOAK_URL": "{{env.KEYCLOAK_URL}}",
+        "KEYCLOAK_CLIENT": "{{env.KEYCLOAK_CLIENT}}",
+        "KEYCLOAK_SECRET": "{{env.KEYCLOAK_SECRET}}"
+      }
+    },
+    {
+      "name": "asl-workflow",
+      "port": 8083,
+      "links": [
+        "sqs"
+      ],
+      "env": {
+        "SQS_REGION": "{{env.SQS_REGION}}",
+        "SQS_ACCESS_KEY": "{{env.SQS_ACCESS_KEY}}",
+        "SQS_SECRET": "{{env.SQS_SECRET}}",
+        "SQS_URL": "http://{{services.sqs.host}}:{{services.sqs.port}}/queue/asl-dev",
+        "KEYCLOAK_REALM": "{{env.KEYCLOAK_REALM}}",
+        "KEYCLOAK_URL": "{{env.KEYCLOAK_URL}}",
+        "KEYCLOAK_CLIENT": "{{env.KEYCLOAK_CLIENT}}",
+        "KEYCLOAK_SECRET": "{{env.KEYCLOAK_SECRET}}"
+      }
+    },
+    {
+      "name": "asl-resolver",
+      "links": [
+        "sqs",
+        "postgres"
+      ],
+      "env": {
+        "DATABASE_NAME": "{{env.DATABASE_NAME}}",
+        "DATABASE_USERNAME": "{{env.DATABASE_USERNAME}}",
+        "DATABASE_HOST": "{{services.postgres.host}}",
+        "SQS_REGION": "{{env.SQS_REGION}}",
+        "SQS_ACCESS_KEY": "{{env.SQS_ACCESS_KEY}}",
+        "SQS_SECRET": "{{env.SQS_SECRET}}",
+        "SQS_URL": "http://{{services.sqs.host}}:{{services.sqs.port}}/queue/asl-dev"
+      }
+    },
+    {
+      "name": "asl-schema",
+      "run": "bash -c 'npm run migrate && npm run seed'",
+      "links": [
+        "postgres"
+      ],
+      "env": {
+        "DATABASE_NAME": "{{env.DATABASE_NAME}}",
+        "DATABASE_USERNAME": "{{env.DATABASE_USERNAME}}",
+        "DATABASE_HOST": "{{services.postgres.host}}"
+      }
+    },
+    {
+      "name": "redis",
+      "image": "redis",
+      "port": 6379
+    },
+    {
+      "name": "sqs",
+      "image": "localstack/localstack",
+      "port": 4576,
+      "env": {
+        "SERVICES": "sqs",
+        "DEFAULT_REGION": "{{env.SQS_REGION}}"
+      }
+    },
+    {
+      "name": "aws-cli",
+      "image": "mesosphere/aws-cli",
+      "links": [
+        "sqs"
+      ],
+      "run": "--endpoint-url=http://sqs:4576 sqs create-queue --queue-name asl-dev --region $SQS_REGION --no-sign-request --no-verify-ssl",
+      "env": {
+        "SQS_REGION": "{{env.SQS_REGION}}"
+      }
+    },
+    {
+      "name": "postgres",
+      "image": "postgres",
+      "port": 5432,
+      "env": {
+        "POSTGRES_USER": "{{env.DATABASE_USERNAME}}",
+        "POSTGRES_DB": "{{env.DATABASE_NAME}}"
+      }
+    }
+  ]
+}
