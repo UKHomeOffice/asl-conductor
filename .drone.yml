@@ -4,7 +4,7 @@ pipeline:
     image: node:8
     commands:
       - npm install -g npm@6
-      - npm install
+      - npm ci
       - npm test
     when:
       event: [push, pull_request]
