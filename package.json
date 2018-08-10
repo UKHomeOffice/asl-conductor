@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "conductor": "bin/conductor"
+    "conductor": "bin/conductor",
+    "test": "eslint ."
   },
   "keywords": [],
   "author": "",
@@ -15,5 +16,9 @@
     "minimist": "^1.2.0",
     "mustache": "^2.3.1",
     "r2": "^2.0.1"
+  },
+  "devDependencies": {
+    "eslint": "^5.3.0",
+    "eslint-config-lennym": "^2.0.1"
   }
 }
