@@ -6,7 +6,7 @@
     "conductor": "bin/conductor"
   },
   "scripts": {
-    "start": "npm run conductor",
+    "start": "bin/conductor",
     "conductor": "bin/conductor",
     "seed": "docker-compose run asl-schema bash -c 'npm run seed'",
     "test": "eslint ."
