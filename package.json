@@ -2,6 +2,9 @@
   "name": "conductor",
   "version": "1.0.0",
   "main": "index.js",
+  "bin": {
+    "conductor": "bin/conductor"
+  },
   "scripts": {
     "conductor": "bin/conductor",
     "test": "eslint ."
