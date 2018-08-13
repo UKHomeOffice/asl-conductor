@@ -95,7 +95,7 @@
     },
     {
       "name": "asl-schema",
-      "run": "bash -c 'npm run migrate && npm run seed'",
+      "run": "bash -c 'npm run migrate'",
       "links": [
         "postgres"
       ],

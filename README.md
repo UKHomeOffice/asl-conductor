@@ -23,16 +23,20 @@ KEYCLOAK_SECRET=
 To spin up a default stack of all services:
 
 ```
-npm run conductor
+npm start
 ```
 
 To spin up a stack of all but one service so you can run a development version of that locally:
 
 ```
-npm run conductor --local <service-name>
+npm start -- --local <service-name>
 ```
 
 _Note: you will need to make sure that the local service is configured to use the docker versions of everything else_
+
+### Seeding data
+
+To populate the postgres database with dummy development data run `npm run seed`. You should only need to do this once.
 
 ## Troubleshooting
 
