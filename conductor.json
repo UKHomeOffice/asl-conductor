@@ -134,7 +134,7 @@
       "port": 5432,
       "env": {
         "POSTGRES_USER": "{{env.DATABASE_USERNAME}}",
-        "POSTGRES_DATABASES": "'\"{{env.DATABASE_NAME}}\",\"{{env.DATABASE_NAME_TEST}}\"'"
+        "POSTGRES_DATABASES": "'{{env.DATABASE_NAME}},{{env.DATABASE_NAME_TEST}}'"
       }
     }
   ]
