@@ -1,6 +1,7 @@
 {
   "env": {
     "DATABASE_NAME": "asl",
+    "DATABASE_NAME_TEST": "asl-test",
     "DATABASE_USERNAME": "postgres",
     "SQS_SECRET": "stub",
     "SQS_ACCESS_KEY": "stub",
@@ -129,11 +130,11 @@
     },
     {
       "name": "postgres",
-      "image": "postgres",
+      "build": ".docker/postgres",
       "port": 5432,
       "env": {
         "POSTGRES_USER": "{{env.DATABASE_USERNAME}}",
-        "POSTGRES_DB": "{{env.DATABASE_NAME}}"
+        "POSTGRES_DATABASES": "'\"{{env.DATABASE_NAME}}\",\"{{env.DATABASE_NAME_TEST}}\"'"
       }
     }
   ]

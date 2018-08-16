@@ -2,7 +2,12 @@ version: '3'
 services:
 {{#services}}
   {{name}}:
+    {{#image}}
     image: {{image}}
+    {{/image}}
+    {{#build}}
+    build: {{build}}
+    {{/build}}
     {{#env.length}}
     environment:
     {{#env}}
