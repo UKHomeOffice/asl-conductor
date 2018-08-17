@@ -12,4 +12,6 @@ args.env = args.env || '.env';
 args.out = args.out || 'docker-compose.yml';
 args.detach = args.detach || args.d;
 
+args.local = [].concat(args.local).filter(Boolean);
+
 conductor(config, args);

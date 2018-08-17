@@ -39,7 +39,13 @@ To spin up a stack of all but one service so you can run a development version o
 npm start -- --local <service-name>
 ```
 
-_Note: you will need to make sure that the local service is configured to use the docker versions of everything else_
+_Note: you will need to make sure that the local service is configured to use the docker versions of everything else - i.e. hosts and ports are set to match those in the docker compose config._
+
+To run multiple services locally, simply pass multiple `--local` flags:
+
+```
+npm start -- --local <service-name> --local <another-service-name>
+```
 
 ### Seeding data
 
