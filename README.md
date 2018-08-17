@@ -13,18 +13,23 @@ To the best of my knowledge this only works with Docker for Mac because of how i
 First, create a local `.env` file with the following variables defined:
 
 ```
+# an arbitrary string
 SESSION_SECRET=
+# another arbitrary string
+JWT_SECRET=
+# authentication client parameters
 KEYCLOAK_REALM=
 KEYCLOAK_URL=
 KEYCLOAK_CLIENT=
 KEYCLOAK_SECRET=
+# username and password of an administrator for admin api access
 KEYCLOAK_USERNAME=
 KEYCLOAK_PASSWORD=
+# AWS SES configuration
 EMAIL_FROM_ADDRESS=
 EMAIL_ACCESS_KEY=
 EMAIL_SECRET=
 EMAIL_REGION=
-JWT_SECRET=
 ```
 
 To spin up a default stack of all services:
