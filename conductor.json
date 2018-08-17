@@ -91,7 +91,23 @@
         "SQS_REGION": "{{env.SQS_REGION}}",
         "SQS_ACCESS_KEY": "{{env.SQS_ACCESS_KEY}}",
         "SQS_SECRET": "{{env.SQS_SECRET}}",
-        "SQS_URL": "http://{{services.sqs.host}}:{{services.sqs.port}}/queue/asl-dev"
+        "SQS_URL": "http://{{services.sqs.host}}:{{services.sqs.port}}/queue/asl-dev",
+        "KEYCLOAK_REALM": "{{env.KEYCLOAK_REALM}}",
+        "KEYCLOAK_URL": "{{env.KEYCLOAK_URL}}",
+        "KEYCLOAK_CLIENT": "{{env.KEYCLOAK_CLIENT}}",
+        "KEYCLOAK_SECRET": "{{env.KEYCLOAK_SECRET}}",
+        "EMAILER_SERVICE": "http://{{services.asl-emailer.host}}:{{services.asl-emailer.port}}",
+        "JWT_SECRET": "{{env.JWT_SECRET}}"
+      }
+    },
+    {
+      "name": "asl-emailer",
+      "port": 8084,
+      "env": {
+        "EMAIL_FROM_ADDRESS": "{{env.EMAIL_FROM_ADDRESS}}",
+        "EMAIL_ACCESS_KEY": "{{env.EMAIL_ACCESS_KEY}}",
+        "EMAIL_SECRET": "{{env.EMAIL_SECRET}}",
+        "EMAIL_REGION": "{{env.EMAIL_REGION}}"
       }
     },
     {
