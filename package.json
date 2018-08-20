@@ -8,7 +8,7 @@
   "scripts": {
     "start": "bin/conductor",
     "conductor": "bin/conductor",
-    "seed": "docker-compose run asl-schema bash -c 'npm run seed'",
+    "seed": "docker-compose run asl-schema sh -c 'npm run seed'",
     "test": "eslint ."
   },
   "keywords": [],
