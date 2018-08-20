@@ -112,7 +112,7 @@
     },
     {
       "name": "asl-schema",
-      "run": "bash -c 'npm run migrate'",
+      "run": "sh -c 'npm run migrate'",
       "links": [
         "postgres"
       ],
