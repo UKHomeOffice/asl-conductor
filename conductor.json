@@ -111,6 +111,34 @@
       }
     },
     {
+      "name": "asl-register",
+      "port": 8085,
+      "links": [
+        "redis",
+        "asl-public-api",
+        "postgres",
+        "sqs",
+        "asl"
+      ],
+      "env": {
+        "REDIS_HOST": "{{services.redis.host}}",
+        "SESSION_SECRET": "{{env.SESSION_SECRET}}",
+        "KEYCLOAK_REALM": "{{env.KEYCLOAK_REALM}}",
+        "KEYCLOAK_URL": "{{env.KEYCLOAK_URL}}",
+        "KEYCLOAK_CLIENT": "{{env.KEYCLOAK_CLIENT}}",
+        "KEYCLOAK_SECRET": "{{env.KEYCLOAK_SECRET}}",
+        "DATABASE_NAME": "{{env.DATABASE_NAME}}",
+        "DATABASE_USERNAME": "{{env.DATABASE_USERNAME}}",
+        "DATABASE_HOST": "{{services.postgres.host}}",
+        "JWT_SECRET": "{{env.JWT_SECRET}}",
+        "SQS_REGION": "{{env.SQS_REGION}}",
+        "SQS_ACCESS_KEY": "{{env.SQS_ACCESS_KEY}}",
+        "SQS_SECRET": "{{env.SQS_SECRET}}",
+        "SQS_URL": "http://{{services.sqs.host}}:{{services.sqs.port}}/queue/asl-dev",
+        "CLIENT_URL": "http://{{services.asl.host}}:{{services.asl.port}}"
+      }
+    },
+    {
       "name": "asl-schema",
       "run": "sh -c 'npm run migrate'",
       "links": [
