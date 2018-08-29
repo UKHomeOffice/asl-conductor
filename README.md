@@ -74,8 +74,8 @@ By default the config will be read from `./conductor.json` and a `docker-compose
 npm run conductor -- alternative-input.json --out docker-compose-alt.yml
 ```
 
-To run `docker-compose` detached:
+`docker-compose` will run detached by default, to run undetached:
 
 ```
-npm run conductor -- --detach
+npm run conductor -- --no-detach
 ```
