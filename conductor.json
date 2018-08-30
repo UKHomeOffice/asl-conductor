@@ -117,8 +117,7 @@
         "redis",
         "asl-public-api",
         "postgres",
-        "sqs",
-        "asl"
+        "sqs"
       ],
       "env": {
         "REDIS_HOST": "{{services.redis.host}}",
