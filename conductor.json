@@ -96,6 +96,8 @@
         "KEYCLOAK_URL": "{{env.KEYCLOAK_URL}}",
         "KEYCLOAK_CLIENT": "{{env.KEYCLOAK_CLIENT}}",
         "KEYCLOAK_SECRET": "{{env.KEYCLOAK_SECRET}}",
+        "KEYCLOAK_USERNAME": "{{env.KEYCLOAK_USERNAME}}",
+        "KEYCLOAK_PASSWORD": "{{env.KEYCLOAK_PASSWORD}}",
         "EMAILER_SERVICE": "http://{{services.asl-emailer.host}}:{{services.asl-emailer.port}}",
         "JWT_SECRET": "{{env.JWT_SECRET}}",
         "REGISTER_SERVICE": "http://localhost:{{services.asl-register.port}}"
