@@ -135,7 +135,7 @@
         "SQS_ACCESS_KEY": "{{env.SQS_ACCESS_KEY}}",
         "SQS_SECRET": "{{env.SQS_SECRET}}",
         "SQS_URL": "http://{{services.sqs.host}}:{{services.sqs.port}}/queue/asl-dev",
-        "CLIENT_URL": "http://{{services.asl.host}}:{{services.asl.port}}"
+        "CLIENT_URL": "http://localhost:{{services.asl.port}}"
       }
     },
     {
