@@ -3,6 +3,8 @@
     "DATABASE_NAME": "asl",
     "DATABASE_NAME_TEST": "asl-test",
     "DATABASE_USERNAME": "postgres",
+    "WORKFLOW_DATABASE_NAME": "taskflow",
+    "WORKFLOW_DATABASE_USERNAME": "postgres",
     "SQS_SECRET": "stub",
     "SQS_ACCESS_KEY": "stub",
     "SQS_REGION": "eu-west-1"
@@ -75,7 +77,10 @@
         "KEYCLOAK_REALM": "{{env.KEYCLOAK_REALM}}",
         "KEYCLOAK_URL": "{{env.KEYCLOAK_URL}}",
         "KEYCLOAK_CLIENT": "{{env.KEYCLOAK_CLIENT}}",
-        "KEYCLOAK_SECRET": "{{env.KEYCLOAK_SECRET}}"
+        "KEYCLOAK_SECRET": "{{env.KEYCLOAK_SECRET}}",
+        "DATABASE_NAME": "{{env.WORKFLOW_DATABASE_NAME}}",
+        "DATABASE_USERNAME": "{{env.WORKFLOW_DATABASE_USERNAME}}",
+        "DATABASE_HOST": "{{services.postgres.host}}"
       }
     },
     {
@@ -180,7 +185,7 @@
       "port": 5432,
       "env": {
         "POSTGRES_USER": "{{env.DATABASE_USERNAME}}",
-        "POSTGRES_DATABASES": "'{{env.DATABASE_NAME}},{{env.DATABASE_NAME_TEST}}'"
+        "POSTGRES_DATABASES": "'{{env.DATABASE_NAME}},{{env.DATABASE_NAME_TEST}},{{env.WORKFLOW_DATABASE_NAME}}'"
       }
     }
   ]
