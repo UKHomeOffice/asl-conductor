@@ -67,7 +67,8 @@
       "name": "asl-workflow",
       "port": 8083,
       "links": [
-        "sqs"
+        "sqs",
+        "postgres"
       ],
       "env": {
         "SQS_REGION": "{{env.SQS_REGION}}",
