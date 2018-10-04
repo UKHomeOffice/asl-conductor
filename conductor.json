@@ -147,6 +147,24 @@
       }
     },
     {
+      "name": "asl-inspector-ui",
+      "port": 8086,
+      "links": [
+        "redis",
+        "asl-public-api"
+      ],
+      "env": {
+        "REDIS_HOST": "{{services.redis.host}}",
+        "SESSION_SECRET": "{{env.SESSION_SECRET}}",
+        "KEYCLOAK_REALM": "{{env.KEYCLOAK_REALM}}",
+        "KEYCLOAK_URL": "{{env.KEYCLOAK_URL}}",
+        "KEYCLOAK_CLIENT": "{{env.KEYCLOAK_CLIENT}}",
+        "KEYCLOAK_SECRET": "{{env.KEYCLOAK_SECRET}}",
+        "API_URL": "http://{{services.asl-public-api.host}}:{{services.asl-public-api.port}}",
+        "WORKFLOW_URL": "http://{{services.asl-workflow.host}}:{{services.asl-workflow.port}}"
+      }
+    },
+    {
       "name": "asl-schema",
       "run": "sh -c 'npm run migrate'",
       "links": [
