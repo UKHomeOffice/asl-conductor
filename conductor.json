@@ -81,7 +81,10 @@
         "KEYCLOAK_SECRET": "{{env.KEYCLOAK_SECRET}}",
         "DATABASE_NAME": "{{env.WORKFLOW_DATABASE_NAME}}",
         "DATABASE_USERNAME": "{{env.WORKFLOW_DATABASE_USERNAME}}",
-        "DATABASE_HOST": "{{services.postgres.host}}"
+        "DATABASE_HOST": "{{services.postgres.host}}",
+        "ASL_DATABASE_NAME": "{{env.DATABASE_NAME}}",
+        "ASL_DATABASE_USERNAME": "{{env.DATABASE_USERNAME}}",
+        "ASL_DATABASE_HOST": "{{services.postgres.host}}"
       }
     },
     {
