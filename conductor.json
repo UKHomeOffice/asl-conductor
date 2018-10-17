@@ -24,7 +24,8 @@
         "KEYCLOAK_URL": "{{env.KEYCLOAK_URL}}",
         "KEYCLOAK_CLIENT": "{{env.KEYCLOAK_CLIENT}}",
         "KEYCLOAK_SECRET": "{{env.KEYCLOAK_SECRET}}",
-        "API_URL": "http://{{services.asl-public-api.host}}:{{services.asl-public-api.port}}"
+        "API_URL": "http://{{services.asl-public-api.host}}:{{services.asl-public-api.port}}",
+        "PERMISSIONS_SERVICE": "http://{{services.asl-permissions.host}}:{{services.asl-permissions.port}}"
       }
     },
     {
