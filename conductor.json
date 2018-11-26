@@ -140,7 +140,8 @@
         "KEYCLOAK_CLIENT": "{{env.KEYCLOAK_CLIENT}}",
         "KEYCLOAK_SECRET": "{{env.KEYCLOAK_SECRET}}",
         "API_URL": "http://{{services.asl-public-api.host}}:{{services.asl-public-api.port}}",
-        "WORKFLOW_URL": "http://{{services.asl-workflow.host}}:{{services.asl-workflow.port}}"
+        "WORKFLOW_URL": "http://{{services.asl-workflow.host}}:{{services.asl-workflow.port}}",
+        "PERMISSIONS_SERVICE": "http://{{services.asl-permissions.host}}:{{services.asl-permissions.port}}"
       }
     },
     {
