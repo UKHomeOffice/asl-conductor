@@ -6,6 +6,7 @@
     "WORKFLOW_DATABASE_NAME": "taskflow",
     "WORKFLOW_DATABASE_NAME_TEST": "taskflow-test",
     "WORKFLOW_DATABASE_USERNAME": "postgres",
+    "WORKFLOW_ASL_TEST_DATABASE": "workflow-asl-test",
     "SQS_SECRET": "stub",
     "SQS_ACCESS_KEY": "stub",
     "SQS_REGION": "eu-west-1"
@@ -184,7 +185,7 @@
       "port": 5432,
       "env": {
         "POSTGRES_USER": "{{env.DATABASE_USERNAME}}",
-        "POSTGRES_DATABASES": "'{{env.DATABASE_NAME}},{{env.DATABASE_NAME_TEST}},{{env.WORKFLOW_DATABASE_NAME}},{{env.WORKFLOW_DATABASE_NAME_TEST}}'"
+        "POSTGRES_DATABASES": "'{{env.DATABASE_NAME}},{{env.DATABASE_NAME_TEST}},{{env.WORKFLOW_DATABASE_NAME}},{{env.WORKFLOW_DATABASE_NAME_TEST}},{{env.WORKFLOW_ASL_TEST_DATABASE}}'"
       }
     }
   ]
