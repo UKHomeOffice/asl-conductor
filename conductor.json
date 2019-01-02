@@ -126,7 +126,7 @@
       }
     },
     {
-      "name": "asl-inspector-ui",
+      "name": "asl-internal-ui",
       "port": 8085,
       "links": [
         "redis",
