@@ -126,11 +126,11 @@
       }
     },
     {
-      "name": "asl-inspector-ui",
-      "port": 8086,
+      "name": "asl-internal-ui",
+      "port": 8085,
       "links": [
         "redis",
-        "asl-public-api"
+        "asl-internal-api"
       ],
       "env": {
         "REDIS_HOST": "{{services.redis.host}}",
@@ -139,9 +139,31 @@
         "KEYCLOAK_URL": "{{env.KEYCLOAK_URL}}",
         "KEYCLOAK_CLIENT": "{{env.KEYCLOAK_CLIENT}}",
         "KEYCLOAK_SECRET": "{{env.KEYCLOAK_SECRET}}",
-        "API_URL": "http://{{services.asl-public-api.host}}:{{services.asl-public-api.port}}",
+        "API_URL": "http://{{services.asl-internal-api.host}}:{{services.asl-internal-api.port}}",
         "WORKFLOW_URL": "http://{{services.asl-workflow.host}}:{{services.asl-workflow.port}}",
         "PERMISSIONS_SERVICE": "http://{{services.asl-permissions.host}}:{{services.asl-permissions.port}}"
+      }
+    },
+    {
+      "name": "asl-internal-api",
+      "port": 8086,
+      "links": [
+        "postgres",
+        "asl-permissions",
+        "asl-workflow",
+        "asl-public-api"
+      ],
+      "env": {
+        "API_URL": "http://{{services.asl-public-api.host}}:{{services.asl-public-api.port}}",
+        "WORKFLOW_SERVICE": "http://{{services.asl-workflow.host}}:{{services.asl-workflow.port}}",
+        "PERMISSIONS_SERVICE": "http://{{services.asl-permissions.host}}:{{services.asl-permissions.port}}",
+        "DATABASE_NAME": "{{env.DATABASE_NAME}}",
+        "DATABASE_USERNAME": "{{env.DATABASE_USERNAME}}",
+        "DATABASE_HOST": "{{services.postgres.host}}",
+        "KEYCLOAK_REALM": "{{env.KEYCLOAK_REALM}}",
+        "KEYCLOAK_URL": "{{env.KEYCLOAK_URL}}",
+        "KEYCLOAK_CLIENT": "{{env.KEYCLOAK_CLIENT}}",
+        "KEYCLOAK_SECRET": "{{env.KEYCLOAK_SECRET}}"
       }
     },
     {
