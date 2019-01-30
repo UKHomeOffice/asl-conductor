@@ -56,6 +56,10 @@ npm start -- --local <service-name> --local <another-service-name>
 
 To populate the postgres database with dummy development data run `npm run seed`. You should only need to do this once.
 
+## Offline-ish access
+
+Add a `--no-pull` flag to use the last-used image version and _hopefully_ prevent pulling new images from the internet.
+
 ## Troubleshooting
 
 This is _very_ hacky, and occasionally things fail because they started up in a funny order.

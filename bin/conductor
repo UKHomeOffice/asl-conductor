@@ -10,6 +10,7 @@ const config = require(path.resolve(process.cwd(), file));
 
 args.env = args.env || '.env';
 args.out = args.out || 'docker-compose.yml';
+args.pull = args.pull !== false;
 
 args.local = [].concat(args.local).filter(Boolean);
 
