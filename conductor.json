@@ -167,6 +167,20 @@
       }
     },
     {
+      "name": "asl-notifications",
+      "port": 8087,
+      "links": [
+        "postgres",
+        "asl-emailer"
+      ],
+      "env": {
+        "DATABASE_NAME": "{{env.DATABASE_NAME}}",
+        "DATABASE_USERNAME": "{{env.DATABASE_USERNAME}}",
+        "DATABASE_HOST": "{{services.postgres.host}}",
+        "EMAILER_SERVICE": "http://{{services.asl-emailer.host}}:{{services.asl-emailer.port}}"
+      }
+    },
+    {
       "name": "asl-schema",
       "run": "sh -c 'npm run migrate'",
       "links": [
