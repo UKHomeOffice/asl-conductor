@@ -22,9 +22,6 @@ KEYCLOAK_REALM=
 KEYCLOAK_URL=
 KEYCLOAK_CLIENT=
 KEYCLOAK_SECRET=
-# username and password of an administrator for admin api access
-KEYCLOAK_USERNAME=
-KEYCLOAK_PASSWORD=
 # AWS SES configuration
 EMAIL_FROM_ADDRESS=
 EMAIL_ACCESS_KEY=
