@@ -190,6 +190,13 @@
       }
     },
     {
+      "name": "html-pdf-converter",
+      "port": 8088,
+      "env": {
+        "BODY_SIZE_LIMIT": "5mb"
+      }
+    },
+    {
       "name": "asl-schema",
       "run": "sh -c 'npm run migrate'",
       "links": [
