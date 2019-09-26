@@ -7,8 +7,11 @@
   },
   "scripts": {
     "start": "bin/conductor",
+    "poststart": "docker-compose restart aws-cli",
     "conductor": "bin/conductor",
+    "migrate": "docker-compose run asl-schema sh -c 'npm run migrate' && docker-compose exec asl-workflow npm run migrate",
     "seed": "docker-compose run asl-schema sh -c 'npm run seed' && docker-compose exec asl-workflow npm run seed",
+    "preseed": "npm run migrate",
     "test": "eslint ."
   },
   "keywords": [],
