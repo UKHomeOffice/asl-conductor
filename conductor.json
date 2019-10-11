@@ -93,7 +93,8 @@
         "DATABASE_HOST": "{{services.postgres.host}}",
         "ASL_DATABASE_NAME": "{{env.DATABASE_NAME}}",
         "ASL_DATABASE_USERNAME": "{{env.DATABASE_USERNAME}}",
-        "ASL_DATABASE_HOST": "{{services.postgres.host}}"
+        "ASL_DATABASE_HOST": "{{services.postgres.host}}",
+        "NOTIFICATIONS_SERVICE": "http://{{services.asl-notifications.host}}:{{services.asl-notifications.port}}"
       }
     },
     {
