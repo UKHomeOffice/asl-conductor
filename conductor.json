@@ -121,20 +121,14 @@
         "KEYCLOAK_SECRET": "{{env.KEYCLOAK_SECRET}}",
         "KEYCLOAK_USERNAME": "{{env.KEYCLOAK_USERNAME}}",
         "KEYCLOAK_PASSWORD": "{{env.KEYCLOAK_PASSWORD}}",
-        "EMAILER_SERVICE": "http://{{services.asl-emailer.host}}:{{services.asl-emailer.port}}",
+        "EMAILER_SERVICE": "http://{{services.asl-stub.host}}:{{services.asl-stub.port}}",
         "JWT_SECRET": "{{env.JWT_SECRET}}",
         "REGISTER_SERVICE": "http://localhost:{{services.asl.port}}"
       }
     },
     {
-      "name": "asl-emailer",
-      "port": 8084,
-      "env": {
-        "EMAIL_FROM_ADDRESS": "{{env.EMAIL_FROM_ADDRESS}}",
-        "EMAIL_ACCESS_KEY": "{{env.EMAIL_ACCESS_KEY}}",
-        "EMAIL_SECRET": "{{env.EMAIL_SECRET}}",
-        "EMAIL_REGION": "{{env.EMAIL_REGION}}"
-      }
+      "name": "asl-stub",
+      "port": 8084
     },
     {
       "name": "asl-internal-ui",
@@ -183,13 +177,14 @@
       "port": 8087,
       "links": [
         "postgres",
-        "asl-emailer"
+        "asl-stub"
       ],
       "env": {
         "DATABASE_NAME": "{{env.DATABASE_NAME}}",
         "DATABASE_USERNAME": "{{env.DATABASE_USERNAME}}",
         "DATABASE_HOST": "{{services.postgres.host}}",
-        "EMAILER_SERVICE": "http://{{services.asl-emailer.host}}:{{services.asl-emailer.port}}"
+        "EMAILER_SERVICE": "http://{{services.asl-stub.host}}:{{services.asl-stub.port}}",
+        "PUBLIC_UI": "http://localhost:{{services.asl.port}}"
       }
     },
     {
