@@ -128,7 +128,8 @@
     },
     {
       "name": "asl-stub",
-      "port": 8084
+      "port": 8084,
+      "image": "quay.io/ukhomeofficedigital/asl-stub:v1.0.2"
     },
     {
       "name": "asl-internal-ui",
