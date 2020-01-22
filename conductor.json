@@ -26,7 +26,7 @@
         "KEYCLOAK_CLIENT": "{{env.KEYCLOAK_CLIENT}}",
         "KEYCLOAK_SECRET": "{{env.KEYCLOAK_SECRET}}",
         "API_URL": "http://{{services.asl-public-api.host}}:{{services.asl-public-api.port}}",
-        "INTERNAL_URL": "http://{{services.asl-internal-ui.host}}:{{services.asl-internal-ui.port}}",
+        "INTERNAL_URL": "http://localhost:{{services.asl-internal-ui.port}}",
         "JWT_SECRET": "{{env.JWT_SECRET}}",
         "PERMISSIONS_SERVICE": "http://{{services.asl-permissions.host}}:{{services.asl-permissions.port}}",
         "PDF_SERVICE": "http://{{services.html-pdf-converter.host}}:{{services.html-pdf-converter.port}}"
