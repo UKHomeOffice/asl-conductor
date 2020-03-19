@@ -148,7 +148,8 @@
         "API_URL": "http://{{services.asl-internal-api.host}}:{{services.asl-internal-api.port}}",
         "WORKFLOW_URL": "http://{{services.asl-workflow.host}}:{{services.asl-workflow.port}}",
         "PERMISSIONS_SERVICE": "http://{{services.asl-permissions.host}}:{{services.asl-permissions.port}}",
-        "PDF_SERVICE": "http://{{services.html-pdf-converter.host}}:{{services.html-pdf-converter.port}}"
+        "PDF_SERVICE": "http://{{services.html-pdf-converter.host}}:{{services.html-pdf-converter.port}}",
+        "ENABLE_PPL_CONVERSION": "'{{env.ENABLE_PPL_CONVERSION}}'"
       }
     },
     {
