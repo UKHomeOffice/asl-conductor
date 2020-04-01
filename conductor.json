@@ -3,6 +3,7 @@
     "DATABASE_NAME": "asl",
     "DATABASE_NAME_TEST": "asl-test",
     "DATABASE_USERNAME": "postgres",
+    "DATABASE_PASSWORD": "test-password",
     "WORKFLOW_DATABASE_NAME": "taskflow",
     "WORKFLOW_DATABASE_NAME_TEST": "taskflow-test",
     "WORKFLOW_DATABASE_USERNAME": "postgres",
@@ -45,6 +46,7 @@
         "PERMISSIONS_SERVICE": "http://{{services.asl-permissions.host}}:{{services.asl-permissions.port}}",
         "DATABASE_NAME": "{{env.DATABASE_NAME}}",
         "DATABASE_USERNAME": "{{env.DATABASE_USERNAME}}",
+        "DATABASE_PASSWORD": "{{env.DATABASE_PASSWORD}}",
         "DATABASE_HOST": "{{services.postgres.host}}",
         "KEYCLOAK_REALM": "{{env.KEYCLOAK_REALM}}",
         "KEYCLOAK_URL": "{{env.KEYCLOAK_URL}}",
@@ -61,6 +63,7 @@
       "env": {
         "DATABASE_NAME": "{{env.DATABASE_NAME}}",
         "DATABASE_USERNAME": "{{env.DATABASE_USERNAME}}",
+        "DATABASE_PASSWORD": "{{env.DATABASE_PASSWORD}}",
         "DATABASE_HOST": "{{services.postgres.host}}",
         "KEYCLOAK_REALM": "{{env.KEYCLOAK_REALM}}",
         "KEYCLOAK_URL": "{{env.KEYCLOAK_URL}}",
@@ -90,9 +93,11 @@
         "KEYCLOAK_SECRET": "{{env.KEYCLOAK_SECRET}}",
         "DATABASE_NAME": "{{env.WORKFLOW_DATABASE_NAME}}",
         "DATABASE_USERNAME": "{{env.WORKFLOW_DATABASE_USERNAME}}",
+        "DATABASE_PASSWORD": "{{env.DATABASE_PASSWORD}}",
         "DATABASE_HOST": "{{services.postgres.host}}",
         "ASL_DATABASE_NAME": "{{env.DATABASE_NAME}}",
         "ASL_DATABASE_USERNAME": "{{env.DATABASE_USERNAME}}",
+        "ASL_DATABASE_PASSWORD": "{{env.DATABASE_PASSWORD}}",
         "ASL_DATABASE_HOST": "{{services.postgres.host}}",
         "NOTIFICATIONS_SERVICE": "http://{{services.asl-notifications.host}}:{{services.asl-notifications.port}}"
       }
@@ -106,6 +111,7 @@
       "env": {
         "DATABASE_NAME": "{{env.DATABASE_NAME}}",
         "DATABASE_USERNAME": "{{env.DATABASE_USERNAME}}",
+        "DATABASE_PASSWORD": "{{env.DATABASE_PASSWORD}}",
         "DATABASE_HOST": "{{services.postgres.host}}",
         "SQS_REGION": "{{env.SQS_REGION}}",
         "SQS_ACCESS_KEY": "{{env.SQS_ACCESS_KEY}}",
@@ -167,6 +173,7 @@
         "PERMISSIONS_SERVICE": "http://{{services.asl-permissions.host}}:{{services.asl-permissions.port}}",
         "DATABASE_NAME": "{{env.DATABASE_NAME}}",
         "DATABASE_USERNAME": "{{env.DATABASE_USERNAME}}",
+        "DATABASE_PASSWORD": "{{env.DATABASE_PASSWORD}}",
         "DATABASE_HOST": "{{services.postgres.host}}",
         "KEYCLOAK_REALM": "{{env.KEYCLOAK_REALM}}",
         "KEYCLOAK_URL": "{{env.KEYCLOAK_URL}}",
@@ -184,6 +191,7 @@
       "env": {
         "DATABASE_NAME": "{{env.DATABASE_NAME}}",
         "DATABASE_USERNAME": "{{env.DATABASE_USERNAME}}",
+        "DATABASE_PASSWORD": "{{env.DATABASE_PASSWORD}}",
         "DATABASE_HOST": "{{services.postgres.host}}",
         "EMAILER_SERVICE": "http://{{services.asl-stub.host}}:{{services.asl-stub.port}}",
         "PUBLIC_UI": "http://localhost:{{services.asl.port}}"
@@ -205,6 +213,7 @@
       "env": {
         "DATABASE_NAME": "{{env.DATABASE_NAME}}",
         "DATABASE_USERNAME": "{{env.DATABASE_USERNAME}}",
+        "DATABASE_PASSWORD": "{{env.DATABASE_PASSWORD}}",
         "DATABASE_HOST": "{{services.postgres.host}}"
       }
     },
@@ -236,6 +245,7 @@
       "port": 5432,
       "env": {
         "POSTGRES_USER": "{{env.DATABASE_USERNAME}}",
+        "POSTGRES_PASSWORD": "{{env.DATABASE_PASSWORD}}",
         "POSTGRES_DATABASES": "'{{env.DATABASE_NAME}},{{env.DATABASE_NAME_TEST}},{{env.WORKFLOW_DATABASE_NAME}},{{env.WORKFLOW_DATABASE_NAME_TEST}}'"
       }
     }
