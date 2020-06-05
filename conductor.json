@@ -76,7 +76,8 @@
       "port": 8083,
       "links": [
         "sqs",
-        "postgres"
+        "postgres",
+        "asl-permissions"
       ],
       "env": {
         "SQS_REGION": "{{env.SQS_REGION}}",
@@ -99,7 +100,8 @@
         "ASL_DATABASE_USERNAME": "{{env.DATABASE_USERNAME}}",
         "ASL_DATABASE_PASSWORD": "{{env.DATABASE_PASSWORD}}",
         "ASL_DATABASE_HOST": "{{services.postgres.host}}",
-        "NOTIFICATIONS_SERVICE": "http://{{services.asl-notifications.host}}:{{services.asl-notifications.port}}"
+        "NOTIFICATIONS_SERVICE": "http://{{services.asl-notifications.host}}:{{services.asl-notifications.port}}",
+        "PERMISSIONS_SERVICE": "http://{{services.asl-permissions.host}}:{{services.asl-permissions.port}}"
       }
     },
     {
