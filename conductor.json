@@ -148,7 +148,8 @@
       "port": 8085,
       "links": [
         "redis",
-        "asl-internal-api"
+        "asl-internal-api",
+        "asl-metrics"
       ],
       "env": {
         "REDIS_HOST": "{{services.redis.host}}",
@@ -158,6 +159,7 @@
         "KEYCLOAK_CLIENT": "{{env.KEYCLOAK_CLIENT}}",
         "KEYCLOAK_SECRET": "{{env.KEYCLOAK_SECRET}}",
         "API_URL": "http://{{services.asl-internal-api.host}}:{{services.asl-internal-api.port}}",
+        "METRICS_URL": "http://{{services.asl-metrics.host}}:{{services.asl-metrics.port}}",
         "WORKFLOW_URL": "http://{{services.asl-workflow.host}}:{{services.asl-workflow.port}}",
         "PERMISSIONS_SERVICE": "http://{{services.asl-permissions.host}}:{{services.asl-permissions.port}}",
         "PDF_SERVICE": "http://{{services.html-pdf-converter.host}}:{{services.html-pdf-converter.port}}",
@@ -208,6 +210,28 @@
       "port": 8088,
       "env": {
         "BODY_SIZE_LIMIT": "5mb"
+      }
+    },
+    {
+      "name": "asl-metrics",
+      "port": 8089,
+      "links": [
+        "asl-workflow"
+      ],
+      "env": {
+        "KEYCLOAK_REALM": "{{env.KEYCLOAK_REALM}}",
+        "KEYCLOAK_URL": "{{env.KEYCLOAK_URL}}",
+        "KEYCLOAK_CLIENT": "{{env.KEYCLOAK_CLIENT}}",
+        "KEYCLOAK_SECRET": "{{env.KEYCLOAK_SECRET}}",
+        "DATABASE_NAME": "{{env.WORKFLOW_DATABASE_NAME}}",
+        "DATABASE_USERNAME": "{{env.WORKFLOW_DATABASE_USERNAME}}",
+        "DATABASE_PASSWORD": "{{env.DATABASE_PASSWORD}}",
+        "DATABASE_HOST": "{{services.postgres.host}}",
+        "ASL_DATABASE_NAME": "{{env.DATABASE_NAME}}",
+        "ASL_DATABASE_USERNAME": "{{env.DATABASE_USERNAME}}",
+        "ASL_DATABASE_PASSWORD": "{{env.DATABASE_PASSWORD}}",
+        "ASL_DATABASE_HOST": "{{services.postgres.host}}",
+        "FLOW_URL": "http://{{services.asl-workflow.host}}:{{services.asl-workflow.port}}/flow"
       }
     },
     {
