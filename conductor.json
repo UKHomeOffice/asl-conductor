@@ -254,7 +254,7 @@
     },
     {
       "name": "sqs",
-      "image": "localstack/localstack",
+      "image": "localstack/localstack:0.11.2",
       "port": 4576,
       "env": {
         "SERVICES": "sqs",
