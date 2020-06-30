@@ -278,6 +278,14 @@
         "POSTGRES_PASSWORD": "{{env.DATABASE_PASSWORD}}",
         "POSTGRES_DATABASES": "'{{env.DATABASE_NAME}},{{env.DATABASE_NAME_TEST}},{{env.WORKFLOW_DATABASE_NAME}},{{env.WORKFLOW_DATABASE_NAME_TEST}}'"
       }
+    },
+    {
+      "name": "elasticsearch",
+      "image": "elasticsearch:7.8.0",
+      "port": 9200,
+      "env": {
+        "discovery.type": "single-node"
+      }
     }
   ]
 }
