@@ -149,7 +149,8 @@
       "links": [
         "redis",
         "asl-internal-api",
-        "asl-metrics"
+        "asl-metrics",
+        "asl-search"
       ],
       "env": {
         "REDIS_HOST": "{{services.redis.host}}",
@@ -163,7 +164,8 @@
         "WORKFLOW_URL": "http://{{services.asl-workflow.host}}:{{services.asl-workflow.port}}",
         "PERMISSIONS_SERVICE": "http://{{services.asl-permissions.host}}:{{services.asl-permissions.port}}",
         "PDF_SERVICE": "http://{{services.html-pdf-converter.host}}:{{services.html-pdf-converter.port}}",
-        "ENABLE_PPL_CONVERSION": "'{{env.ENABLE_PPL_CONVERSION}}'"
+        "ENABLE_PPL_CONVERSION": "'{{env.ENABLE_PPL_CONVERSION}}'",
+        "SEARCH_SERVICE": "http://{{services.asl-search.host}}:{{services.asl-search.port}}"
       }
     },
     {
@@ -248,6 +250,27 @@
       }
     },
     {
+      "name": "asl-search",
+      "port": 8090,
+      "links": [
+        "postgres",
+        "elasticsearch"
+      ],
+      "env": {
+        "ELASTIC_NODE": "http://{{services.elasticsearch.host}}:{{services.elasticsearch.port}}",
+        "ELASTIC_USERNAME": "{{env.ELASTIC_USERNAME}}",
+        "ELASTIC_PASSWORD": "{{env.ELASTIC_PASSWORD}}",
+        "DATABASE_NAME": "{{env.DATABASE_NAME}}",
+        "DATABASE_USERNAME": "{{env.DATABASE_USERNAME}}",
+        "DATABASE_PASSWORD": "{{env.DATABASE_PASSWORD}}",
+        "DATABASE_HOST": "{{services.postgres.host}}",
+        "KEYCLOAK_REALM": "{{env.KEYCLOAK_REALM}}",
+        "KEYCLOAK_URL": "{{env.KEYCLOAK_URL}}",
+        "KEYCLOAK_CLIENT": "{{env.KEYCLOAK_CLIENT}}",
+        "KEYCLOAK_SECRET": "{{env.KEYCLOAK_SECRET}}"
+      }
+    },
+    {
       "name": "redis",
       "image": "redis",
       "port": 6379
@@ -277,6 +300,16 @@
         "POSTGRES_USER": "{{env.DATABASE_USERNAME}}",
         "POSTGRES_PASSWORD": "{{env.DATABASE_PASSWORD}}",
         "POSTGRES_DATABASES": "'{{env.DATABASE_NAME}},{{env.DATABASE_NAME_TEST}},{{env.WORKFLOW_DATABASE_NAME}},{{env.WORKFLOW_DATABASE_NAME_TEST}}'"
+      }
+    },
+    {
+      "name": "elasticsearch",
+      "image": "elasticsearch:7.8.0",
+      "port": 9200,
+      "env": {
+        "node.name": "elasticsearch-dev",
+        "discovery.type": "single-node",
+        "ES_JAVA_OPTS": "-Xms128m -Xmx128m"
       }
     }
   ]
