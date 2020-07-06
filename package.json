@@ -12,7 +12,7 @@
     "migrate": "docker-compose run asl-schema sh -c 'npm run migrate' && docker-compose exec asl-workflow npm run migrate",
     "seed": "docker-compose run asl-schema sh -c 'npm run seed' && docker-compose exec asl-workflow npm run seed",
     "preseed": "npm run migrate",
-    "build-search-index": "docker-compose run asl-search sh -c 'npm run indexer'",
+    "build-search-index": "docker-compose run asl-search sh -c 'npm run indexer -- --reset'",
     "postseed": "npm run build-search-index",
     "test": "eslint ."
   },
