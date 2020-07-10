@@ -103,7 +103,8 @@
         "ASL_DATABASE_PASSWORD": "{{env.DATABASE_PASSWORD}}",
         "ASL_DATABASE_HOST": "{{services.postgres.host}}",
         "NOTIFICATIONS_SERVICE": "http://{{services.asl-notifications.host}}:{{services.asl-notifications.port}}",
-        "PERMISSIONS_SERVICE": "http://{{services.asl-permissions.host}}:{{services.asl-permissions.port}}"
+        "PERMISSIONS_SERVICE": "http://{{services.asl-permissions.host}}:{{services.asl-permissions.port}}",
+        "SEARCH_SERVICE": "http://{{services.asl-search.host}}:{{services.asl-search.port}}"
       }
     },
     {
