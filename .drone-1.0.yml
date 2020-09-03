@@ -1,0 +1,13 @@
+
+kind: pipeline
+name: default
+type: kubernetes
+steps:
+  - name: install
+    image: node:12
+    commands:
+      - npm ci
+  - name: test
+    image: node:12
+    commands:
+      - npm test
