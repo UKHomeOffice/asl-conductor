@@ -272,7 +272,8 @@
         "KEYCLOAK_URL": "{{env.KEYCLOAK_URL}}",
         "KEYCLOAK_CLIENT": "{{env.KEYCLOAK_CLIENT}}",
         "KEYCLOAK_SECRET": "{{env.KEYCLOAK_SECRET}}",
-        "ENABLE_GLOBAL_SEARCH": "'TRUE'"
+        "ENABLE_GLOBAL_SEARCH": "'TRUE'",
+        "ENABLE_INDEXER": "'TRUE'"
       }
     },
     {
@@ -293,7 +294,8 @@
         "KEYCLOAK_URL": "{{env.KEYCLOAK_URL}}",
         "KEYCLOAK_CLIENT": "{{env.KEYCLOAK_CLIENT}}",
         "KEYCLOAK_SECRET": "{{env.KEYCLOAK_SECRET}}",
-        "ENABLE_GLOBAL_SEARCH": "'FALSE'"
+        "ENABLE_GLOBAL_SEARCH": "'FALSE'",
+        "ENABLE_INDEXER": "'FALSE'"
       }
     },
     {
