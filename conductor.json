@@ -39,7 +39,8 @@
       "links": [
         "postgres",
         "asl-permissions",
-        "asl-workflow"
+        "asl-workflow",
+        "asl-public-search"
       ],
       "env": {
         "WORKFLOW_SERVICE": "http://{{services.asl-workflow.host}}:{{services.asl-workflow.port}}",
@@ -53,7 +54,8 @@
         "KEYCLOAK_CLIENT": "{{env.KEYCLOAK_CLIENT}}",
         "KEYCLOAK_SECRET": "{{env.KEYCLOAK_SECRET}}",
         "KEYCLOAK_USERNAME": "{{env.KEYCLOAK_USERNAME}}",
-        "KEYCLOAK_PASSWORD": "{{env.KEYCLOAK_PASSWORD}}"
+        "KEYCLOAK_PASSWORD": "{{env.KEYCLOAK_PASSWORD}}",
+        "SEARCH_SERVICE": "http://{{services.asl-public-search.host}}:{{services.asl-public-search.port}}"
       }
     },
     {
@@ -106,7 +108,7 @@
         "ASL_DATABASE_HOST": "{{services.postgres.host}}",
         "NOTIFICATIONS_SERVICE": "http://{{services.asl-notifications.host}}:{{services.asl-notifications.port}}",
         "PERMISSIONS_SERVICE": "http://{{services.asl-permissions.host}}:{{services.asl-permissions.port}}",
-        "SEARCH_SERVICE": "http://{{services.asl-search.host}}:{{services.asl-search.port}}"
+        "SEARCH_SERVICE": "http://{{services.asl-internal-search.host}}:{{services.asl-internal-search.port}}"
       }
     },
     {
@@ -177,7 +179,7 @@
         "asl-permissions",
         "asl-workflow",
         "asl-public-api",
-        "asl-search"
+        "asl-internal-search"
       ],
       "env": {
         "API_URL": "http://{{services.asl-public-api.host}}:{{services.asl-public-api.port}}",
@@ -191,7 +193,7 @@
         "KEYCLOAK_URL": "{{env.KEYCLOAK_URL}}",
         "KEYCLOAK_CLIENT": "{{env.KEYCLOAK_CLIENT}}",
         "KEYCLOAK_SECRET": "{{env.KEYCLOAK_SECRET}}",
-        "SEARCH_SERVICE": "http://{{services.asl-search.host}}:{{services.asl-search.port}}"
+        "SEARCH_SERVICE": "http://{{services.asl-internal-search.host}}:{{services.asl-internal-search.port}}"
       }
     },
     {
@@ -253,7 +255,8 @@
       }
     },
     {
-      "name": "asl-search",
+      "name": "asl-internal-search",
+      "image": "quay.io/ukhomeofficedigital/asl-search",
       "port": 8090,
       "links": [
         "postgres",
@@ -268,7 +271,31 @@
         "KEYCLOAK_REALM": "{{env.KEYCLOAK_REALM}}",
         "KEYCLOAK_URL": "{{env.KEYCLOAK_URL}}",
         "KEYCLOAK_CLIENT": "{{env.KEYCLOAK_CLIENT}}",
-        "KEYCLOAK_SECRET": "{{env.KEYCLOAK_SECRET}}"
+        "KEYCLOAK_SECRET": "{{env.KEYCLOAK_SECRET}}",
+        "ENABLE_GLOBAL_SEARCH": "'TRUE'",
+        "ENABLE_INDEXER": "'TRUE'"
+      }
+    },
+    {
+      "name": "asl-public-search",
+      "image": "quay.io/ukhomeofficedigital/asl-search",
+      "port": 8091,
+      "links": [
+        "postgres",
+        "elasticsearch"
+      ],
+      "env": {
+        "ELASTIC_NODE": "http://{{services.elasticsearch.host}}:{{services.elasticsearch.port}}",
+        "DATABASE_NAME": "{{env.DATABASE_NAME}}",
+        "DATABASE_USERNAME": "{{env.DATABASE_USERNAME}}",
+        "DATABASE_PASSWORD": "{{env.DATABASE_PASSWORD}}",
+        "DATABASE_HOST": "{{services.postgres.host}}",
+        "KEYCLOAK_REALM": "{{env.KEYCLOAK_REALM}}",
+        "KEYCLOAK_URL": "{{env.KEYCLOAK_URL}}",
+        "KEYCLOAK_CLIENT": "{{env.KEYCLOAK_CLIENT}}",
+        "KEYCLOAK_SECRET": "{{env.KEYCLOAK_SECRET}}",
+        "ENABLE_GLOBAL_SEARCH": "'FALSE'",
+        "ENABLE_INDEXER": "'FALSE'"
       }
     },
     {
