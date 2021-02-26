@@ -80,3 +80,11 @@ npm run conductor -- alternative-input.json --out docker-compose-alt.yml
 ```
 npm run conductor -- --no-detach
 ```
+
+## Common dependencies
+
+Running some services with linked dependencies requires a workaround to ensure a single version of certain react components.
+
+A known good set of these dependencies is configured in the package.json and package-lock.json files in the `./common` directory of this repo.
+
+To install copy these into a directory that contains the `asl-*` repo directories and run `npm ci`.
