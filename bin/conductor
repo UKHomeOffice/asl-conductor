@@ -14,4 +14,8 @@ args.pull = args.pull !== false;
 
 args.local = [].concat(args.local).filter(Boolean);
 
-conductor(config, args);
+conductor(config, args)
+  .catch(err => {
+    console.error(err.stack);
+    process.exit(1);
+  });
