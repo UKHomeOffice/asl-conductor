@@ -191,7 +191,8 @@
         "asl-permissions",
         "asl-workflow",
         "asl-public-api",
-        "asl-internal-search"
+        "asl-internal-search",
+        "asl-metrics"
       ],
       "env": {
         "API_URL": "http://{{services.asl-public-api.host}}:{{services.asl-public-api.port}}",
@@ -205,7 +206,8 @@
         "KEYCLOAK_URL": "{{env.KEYCLOAK_URL}}",
         "KEYCLOAK_CLIENT": "{{env.KEYCLOAK_CLIENT}}",
         "KEYCLOAK_SECRET": "{{env.KEYCLOAK_SECRET}}",
-        "SEARCH_SERVICE": "http://{{services.asl-internal-search.host}}:{{services.asl-internal-search.port}}"
+        "SEARCH_SERVICE": "http://{{services.asl-internal-search.host}}:{{services.asl-internal-search.port}}",
+        "METRICS_SERVICE": "http://{{services.asl-metrics.host}}:{{services.asl-metrics.port}}"
       }
     },
     {
