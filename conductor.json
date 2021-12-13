@@ -323,8 +323,8 @@
     },
     {
       "name": "sqs",
-      "image": "localstack/localstack:0.11.2",
-      "port": 4576,
+      "image": "localstack/localstack:0.13",
+      "port": 4566,
       "env": {
         "SERVICES": "sqs",
         "DEFAULT_REGION": "{{env.SQS_REGION}}"
@@ -332,11 +332,11 @@
     },
     {
       "name": "aws-cli",
-      "image": "mesosphere/aws-cli",
+      "image": "amazon/aws-cli:latest",
       "links": [
         "sqs"
       ],
-      "run": "--endpoint-url=http://sqs:4576 sqs create-queue --queue-name=asl-dev --region=eu-west-1 --no-sign-request --no-verify-ssl"
+      "run": "--endpoint-url=http://sqs:4566 sqs create-queue --queue-name=asl-dev --region=eu-west-1 --no-sign-request --no-verify-ssl"
     },
     {
       "name": "postgres",
