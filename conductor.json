@@ -324,8 +324,9 @@
     {
       "name": "sqs",
       "image": "localstack/localstack:0.13",
-      "port": 4566,
+      "port": 4576,
       "env": {
+        "EDGE_PORT": 4576,
         "SERVICES": "sqs",
         "DEFAULT_REGION": "{{env.SQS_REGION}}"
       }
@@ -336,7 +337,7 @@
       "links": [
         "sqs"
       ],
-      "run": "--endpoint-url=http://sqs:4566 sqs create-queue --queue-name=asl-dev --region=eu-west-1 --no-sign-request --no-verify-ssl"
+      "run": "--endpoint-url=http://sqs:4576 sqs create-queue --queue-name=asl-dev --region=eu-west-1 --no-sign-request --no-verify-ssl"
     },
     {
       "name": "postgres",
