@@ -1,4 +1,4 @@
-version: '3'
+version: '3.8'
 services:
 {{#services}}
   {{name}}:
@@ -27,4 +27,13 @@ services:
     {{#run}}
     command: "{{run}}"
     {{/run}}
+    {{#depends_on.length}}
+    depends_on:
+    {{#depends_on}}
+      - {{.}}
+    {{/depends_on}}
+    {{/depends_on.length}}
+    {{#restart}}
+    restart: {{restart}}
+    {{/restart}}
 {{/services}}

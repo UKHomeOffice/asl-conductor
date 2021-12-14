@@ -333,10 +333,14 @@
     {
       "name": "aws-cli",
       "image": "amazon/aws-cli:2.4.6",
+      "depends_on": [
+        "sqs"
+      ],
       "links": [
         "sqs"
       ],
-      "run": "--endpoint-url=http://sqs:4566 sqs create-queue --queue-name=asl-dev --region=eu-west-1 --no-sign-request --no-verify-ssl"
+      "run": "--endpoint-url=http://sqs:4566 sqs create-queue --queue-name=asl-dev --region=eu-west-1 --no-sign-request --no-verify-ssl",
+      "restart": "on-failure"
     },
     {
       "name": "postgres",
