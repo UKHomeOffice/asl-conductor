@@ -7,7 +7,6 @@
   },
   "scripts": {
     "start": "bin/conductor",
-    "poststart": "docker-compose restart aws-cli",
     "conductor": "bin/conductor",
     "migrate": "docker-compose run --rm asl-schema sh -c 'npm run migrate' && docker-compose run --rm asl-workflow npm run migrate",
     "seed": "docker-compose run --rm asl-schema sh -c 'npm run seed' && docker-compose run --rm asl-workflow npm run seed",
