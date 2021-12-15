@@ -87,7 +87,7 @@
         "SQS_REGION": "{{env.SQS_REGION}}",
         "SQS_ACCESS_KEY": "{{env.SQS_ACCESS_KEY}}",
         "SQS_SECRET": "{{env.SQS_SECRET}}",
-        "SQS_URL": "http://{{services.sqs.host}}:{{services.sqs.port}}/queue/asl-dev",
+        "SQS_URL": "http://{{services.sqs.host}}:{{services.sqs.port}}/000000000000/asl-dev",
         "S3_REGION": "{{env.S3_REGION}}",
         "S3_ACCESS_KEY": "{{env.S3_ACCESS_KEY}}",
         "S3_SECRET": "{{env.S3_SECRET}}",
@@ -125,7 +125,7 @@
         "SQS_REGION": "{{env.SQS_REGION}}",
         "SQS_ACCESS_KEY": "{{env.SQS_ACCESS_KEY}}",
         "SQS_SECRET": "{{env.SQS_SECRET}}",
-        "SQS_URL": "http://{{services.sqs.host}}:{{services.sqs.port}}/queue/asl-dev",
+        "SQS_URL": "http://{{services.sqs.host}}:{{services.sqs.port}}/000000000000/asl-dev",
         "S3_REGION": "{{env.S3_REGION}}",
         "S3_ACCESS_KEY": "{{env.S3_ACCESS_KEY}}",
         "S3_SECRET": "{{env.S3_SECRET}}",
@@ -323,20 +323,24 @@
     },
     {
       "name": "sqs",
-      "image": "localstack/localstack:0.11.2",
-      "port": 4576,
+      "image": "localstack/localstack:0.13",
+      "port": 4566,
       "env": {
         "SERVICES": "sqs",
-        "DEFAULT_REGION": "{{env.SQS_REGION}}"
+        "SQS_PROVIDER": "elasticmq"
       }
     },
     {
       "name": "aws-cli",
-      "image": "mesosphere/aws-cli",
+      "image": "amazon/aws-cli:2.4.6",
+      "depends_on": [
+        "sqs"
+      ],
       "links": [
         "sqs"
       ],
-      "run": "--endpoint-url=http://sqs:4576 sqs create-queue --queue-name=asl-dev --region=eu-west-1 --no-sign-request --no-verify-ssl"
+      "run": "--endpoint-url=http://sqs:4566 sqs create-queue --queue-name=asl-dev --region=eu-west-1 --no-sign-request --no-verify-ssl",
+      "restart": "on-failure"
     },
     {
       "name": "postgres",
