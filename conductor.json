@@ -384,8 +384,8 @@
         "KEYCLOAK_URL": "{{env.KEYCLOAK_URL}}",
         "KEYCLOAK_CLIENT": "{{env.KEYCLOAK_CLIENT}}",
         "KEYCLOAK_SECRET": "{{env.KEYCLOAK_SECRET}}",
-        "KEYCLOAK_USERNAME": "{{env.KEYCLOAK_USERNAME}}",
-        "KEYCLOAK_PASSWORD": "{{env.KEYCLOAK_PASSWORD}}"
+        "KEYCLOAK_USERNAME": "{{env.KC_EXPORTS_USERNAME}}",
+        "KEYCLOAK_PASSWORD": "{{env.KC_EXPORTS_PASSWORD}}"
       }
     }
   ]
