@@ -347,7 +347,7 @@
       "links": [
         "localstack"
       ],
-      "run": "--endpoint-url=http://localstack:4566 sqs create-queue --queue-name={{env.SQS_QUEUE}} --region={{env.AWS_REGION}} --no-sign-request --no-verify-ssl",
+      "run": "--endpoint-url=http://{{services.localstack.host}}:{{services.localstack.port}} sqs create-queue --queue-name={{env.SQS_QUEUE}} --region={{env.AWS_REGION}} --no-sign-request --no-verify-ssl",
       "restart": "on-failure"
     },
     {
@@ -359,7 +359,7 @@
       "links": [
         "localstack"
       ],
-      "run": "--endpoint-url=http://localstack:4566 s3api create-bucket --bucket={{env.S3_BUCKET}} --region={{env.AWS_REGION}} --no-sign-request --no-verify-ssl",
+      "run": "--endpoint-url=http://{{services.localstack.host}}:{{services.localstack.port}} s3api create-bucket --bucket={{env.S3_BUCKET}} --region={{env.AWS_REGION}} --no-sign-request --no-verify-ssl",
       "restart": "on-failure"
     },
     {
