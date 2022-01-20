@@ -7,9 +7,12 @@
     "WORKFLOW_DATABASE_NAME": "taskflow",
     "WORKFLOW_DATABASE_NAME_TEST": "taskflow-test",
     "WORKFLOW_DATABASE_USERNAME": "postgres",
-    "SQS_SECRET": "stub",
-    "SQS_ACCESS_KEY": "stub",
-    "SQS_REGION": "eu-west-1"
+    "AWS_SECRET": "test",
+    "AWS_ACCESS_KEY": "test",
+    "AWS_REGION": "eu-west-2",
+    "AWS_ACCOUNT_ID": "000000000000",
+    "SQS_QUEUE": "asl-dev",
+    "S3_BUCKET": "asl-dev"
   },
   "services": [
     {
@@ -79,19 +82,20 @@
       "name": "asl-workflow",
       "port": 8083,
       "links": [
-        "sqs",
+        "localstack",
         "postgres",
         "asl-permissions"
       ],
       "env": {
-        "SQS_REGION": "{{env.SQS_REGION}}",
-        "SQS_ACCESS_KEY": "{{env.SQS_ACCESS_KEY}}",
-        "SQS_SECRET": "{{env.SQS_SECRET}}",
-        "SQS_URL": "http://{{services.sqs.host}}:{{services.sqs.port}}/000000000000/asl-dev",
-        "S3_REGION": "{{env.S3_REGION}}",
-        "S3_ACCESS_KEY": "{{env.S3_ACCESS_KEY}}",
-        "S3_SECRET": "{{env.S3_SECRET}}",
+        "SQS_REGION": "{{env.AWS_REGION}}",
+        "SQS_ACCESS_KEY": "{{env.AWS_ACCESS_KEY}}",
+        "SQS_SECRET": "{{env.AWS_SECRET}}",
+        "SQS_URL": "http://{{services.localstack.host}}:{{services.localstack.port}}/{{env.AWS_ACCOUNT_ID}}/{{env.SQS_QUEUE}}",
+        "S3_REGION": "{{env.AWS_REGION}}",
+        "S3_ACCESS_KEY": "{{env.AWS_ACCESS_KEY}}",
+        "S3_SECRET": "{{env.AWS_SECRET}}",
         "S3_BUCKET": "{{env.S3_BUCKET}}",
+        "S3_LOCALSTACK_URL": "http://{{services.localstack.host}}:{{services.localstack.port}}",
         "TRANSPORT_KEY": "{{env.TRANSPORT_KEY}}",
         "TRANSPORT_IV": "{{env.TRANSPORT_IV}}",
         "KEYCLOAK_REALM": "{{env.KEYCLOAK_REALM}}",
@@ -114,7 +118,7 @@
     {
       "name": "asl-resolver",
       "links": [
-        "sqs",
+        "localstack",
         "postgres"
       ],
       "env": {
@@ -122,14 +126,15 @@
         "DATABASE_USERNAME": "{{env.DATABASE_USERNAME}}",
         "DATABASE_PASSWORD": "{{env.DATABASE_PASSWORD}}",
         "DATABASE_HOST": "{{services.postgres.host}}",
-        "SQS_REGION": "{{env.SQS_REGION}}",
-        "SQS_ACCESS_KEY": "{{env.SQS_ACCESS_KEY}}",
-        "SQS_SECRET": "{{env.SQS_SECRET}}",
-        "SQS_URL": "http://{{services.sqs.host}}:{{services.sqs.port}}/000000000000/asl-dev",
-        "S3_REGION": "{{env.S3_REGION}}",
-        "S3_ACCESS_KEY": "{{env.S3_ACCESS_KEY}}",
-        "S3_SECRET": "{{env.S3_SECRET}}",
+        "SQS_REGION": "{{env.AWS_REGION}}",
+        "SQS_ACCESS_KEY": "{{env.AWS_ACCESS_KEY}}",
+        "SQS_SECRET": "{{env.AWS_SECRET}}",
+        "SQS_URL": "http://{{services.localstack.host}}:{{services.localstack.port}}/{{env.AWS_ACCOUNT_ID}}/{{env.SQS_QUEUE}}",
+        "S3_REGION": "{{env.AWS_REGION}}",
+        "S3_ACCESS_KEY": "{{env.AWS_ACCESS_KEY}}",
+        "S3_SECRET": "{{env.AWS_SECRET}}",
         "S3_BUCKET": "{{env.S3_BUCKET}}",
+        "S3_LOCALSTACK_URL": "http://{{services.localstack.host}}:{{services.localstack.port}}",
         "TRANSPORT_KEY": "{{env.TRANSPORT_KEY}}",
         "TRANSPORT_IV": "{{env.TRANSPORT_IV}}",
         "KEYCLOAK_REALM": "{{env.KEYCLOAK_REALM}}",
@@ -162,7 +167,8 @@
       "links": [
         "redis",
         "asl-internal-api",
-        "asl-metrics"
+        "asl-metrics",
+        "localstack"
       ],
       "env": {
         "REDIS_HOST": "{{services.redis.host}}",
@@ -171,10 +177,11 @@
         "KEYCLOAK_URL": "{{env.KEYCLOAK_URL}}",
         "KEYCLOAK_CLIENT": "{{env.KEYCLOAK_CLIENT}}",
         "KEYCLOAK_SECRET": "{{env.KEYCLOAK_SECRET}}",
-        "S3_REGION": "{{env.S3_REGION}}",
-        "S3_ACCESS_KEY": "{{env.S3_ACCESS_KEY}}",
-        "S3_SECRET": "{{env.S3_SECRET}}",
+        "S3_REGION": "{{env.AWS_REGION}}",
+        "S3_ACCESS_KEY": "{{env.AWS_ACCESS_KEY}}",
+        "S3_SECRET": "{{env.AWS_SECRET}}",
         "S3_BUCKET": "{{env.S3_BUCKET}}",
+        "S3_LOCALSTACK_URL": "http://{{services.localstack.host}}:{{services.localstack.port}}",
         "API_URL": "http://{{services.asl-internal-api.host}}:{{services.asl-internal-api.port}}",
         "METRICS_URL": "http://{{services.asl-metrics.host}}:{{services.asl-metrics.port}}",
         "WORKFLOW_URL": "http://{{services.asl-workflow.host}}:{{services.asl-workflow.port}}",
@@ -322,24 +329,37 @@
       "port": 6379
     },
     {
-      "name": "sqs",
+      "name": "localstack",
       "image": "localstack/localstack:0.13",
       "port": 4566,
       "env": {
-        "SERVICES": "sqs",
+        "DEBUG": 1,
+        "SERVICES": "sqs,s3",
         "SQS_PROVIDER": "elasticmq"
       }
     },
     {
-      "name": "aws-cli",
+      "name": "create-sqs-queue",
       "image": "amazon/aws-cli:2.4.6",
       "depends_on": [
-        "sqs"
+        "localstack"
       ],
       "links": [
-        "sqs"
+        "localstack"
       ],
-      "run": "--endpoint-url=http://sqs:4566 sqs create-queue --queue-name=asl-dev --region=eu-west-1 --no-sign-request --no-verify-ssl",
+      "run": "--endpoint-url=http://{{services.localstack.host}}:{{services.localstack.port}} sqs create-queue --queue-name={{env.SQS_QUEUE}} --region={{env.AWS_REGION}} --no-sign-request --no-verify-ssl",
+      "restart": "on-failure"
+    },
+    {
+      "name": "create-s3-bucket",
+      "image": "amazon/aws-cli:2.4.6",
+      "depends_on": [
+        "localstack"
+      ],
+      "links": [
+        "localstack"
+      ],
+      "run": "--endpoint-url=http://{{services.localstack.host}}:{{services.localstack.port}} s3api create-bucket --bucket={{env.S3_BUCKET}} --region={{env.AWS_REGION}} --no-sign-request --no-verify-ssl",
       "restart": "on-failure"
     },
     {
@@ -370,10 +390,11 @@
         "asl-metrics"
       ],
       "env": {
-        "S3_REGION": "{{env.S3_REGION}}",
-        "S3_ACCESS_KEY": "{{env.S3_ACCESS_KEY}}",
-        "S3_SECRET": "{{env.S3_SECRET}}",
+        "S3_REGION": "{{env.AWS_REGION}}",
+        "S3_ACCESS_KEY": "{{env.AWS_ACCESS_KEY}}",
+        "S3_SECRET": "{{env.AWS_SECRET}}",
         "S3_BUCKET": "{{env.S3_BUCKET}}",
+        "S3_LOCALSTACK_URL": "http://{{services.localstack.host}}:{{services.localstack.port}}",
         "DATABASE_NAME": "{{env.DATABASE_NAME}}",
         "DATABASE_USERNAME": "{{env.DATABASE_USERNAME}}",
         "DATABASE_PASSWORD": "{{env.DATABASE_PASSWORD}}",
