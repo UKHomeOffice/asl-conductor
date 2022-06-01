@@ -1,4 +1,22 @@
 {
+  "ports": {
+    "asl": 8080,
+    "asl-public-api": 8081,
+    "asl-permissions": 8082,
+    "asl-workflow": 8083,
+    "asl-emailer": 8084,
+    "asl-internal-ui": 8085,
+    "asl-internal-api": 8086,
+    "asl-notifications": 8087,
+    "html-pdf-converter": 8088,
+    "asl-metrics": 8089,
+    "asl-internal-search": 8090,
+    "asl-public-search": 8091,
+    "redis": 6379,
+    "localstack": 4566,
+    "postgres": 5432,
+    "elasticsearch": 9200
+  },
   "env": {
     "DATABASE_NAME": "asl",
     "DATABASE_NAME_TEST": "asl-test",
@@ -25,7 +43,6 @@
   "services": [
     {
       "name": "asl",
-      "port": 8080,
       "links": [
         "redis",
         "asl-public-api"
@@ -46,7 +63,6 @@
     },
     {
       "name": "asl-public-api",
-      "port": 8081,
       "links": [
         "postgres",
         "asl-permissions",
@@ -71,7 +87,6 @@
     },
     {
       "name": "asl-permissions",
-      "port": 8082,
       "links": [
         "postgres"
       ],
@@ -88,7 +103,6 @@
     },
     {
       "name": "asl-workflow",
-      "port": 8083,
       "links": [
         "localstack",
         "postgres",
@@ -151,14 +165,14 @@
         "KEYCLOAK_SECRET": "{{env.KEYCLOAK_SECRET}}",
         "KEYCLOAK_USERNAME": "{{env.KEYCLOAK_USERNAME}}",
         "KEYCLOAK_PASSWORD": "{{env.KEYCLOAK_PASSWORD}}",
-        "EMAILER_SERVICE": "http://{{services.asl-stub.host}}:{{services.asl-stub.port}}",
+        "EMAILER_SERVICE": "http://{{services.asl-emailer.host}}:{{services.asl-emailer.port}}",
         "JWT_SECRET": "{{env.JWT_SECRET}}",
         "REGISTER_SERVICE": "http://localhost:{{services.asl.port}}"
       }
     },
     {
-      "name": "asl-stub",
-      "port": 8084,
+      "name": "asl-emailer",
+      "image": "quay.io/ukhomeofficedigital/asl-stub",
       "links": [
         "postgres"
       ],
@@ -171,7 +185,6 @@
     },
     {
       "name": "asl-internal-ui",
-      "port": 8085,
       "links": [
         "redis",
         "asl-internal-api",
@@ -200,7 +213,6 @@
     },
     {
       "name": "asl-internal-api",
-      "port": 8086,
       "links": [
         "postgres",
         "asl-permissions",
@@ -227,30 +239,27 @@
     },
     {
       "name": "asl-notifications",
-      "port": 8087,
       "links": [
         "postgres",
-        "asl-stub"
+        "asl-emailer"
       ],
       "env": {
         "DATABASE_NAME": "{{env.DATABASE_NAME}}",
         "DATABASE_USERNAME": "{{env.DATABASE_USERNAME}}",
         "DATABASE_PASSWORD": "{{env.DATABASE_PASSWORD}}",
         "DATABASE_HOST": "{{services.postgres.host}}",
-        "EMAILER_SERVICE": "http://{{services.asl-stub.host}}:{{services.asl-stub.port}}",
+        "EMAILER_SERVICE": "http://{{services.asl-emailer.host}}:{{services.asl-emailer.port}}",
         "PUBLIC_UI": "http://localhost:{{services.asl.port}}"
       }
     },
     {
       "name": "html-pdf-converter",
-      "port": 8088,
       "env": {
         "BODY_SIZE_LIMIT": "5mb"
       }
     },
     {
       "name": "asl-metrics",
-      "port": 8089,
       "links": [
         "asl-workflow"
       ],
@@ -286,7 +295,6 @@
     {
       "name": "asl-internal-search",
       "image": "quay.io/ukhomeofficedigital/asl-search",
-      "port": 8090,
       "links": [
         "postgres",
         "elasticsearch"
@@ -312,7 +320,6 @@
     {
       "name": "asl-public-search",
       "image": "quay.io/ukhomeofficedigital/asl-search",
-      "port": 8091,
       "links": [
         "postgres",
         "elasticsearch"
@@ -333,13 +340,11 @@
     },
     {
       "name": "redis",
-      "image": "redis",
-      "port": 6379
+      "image": "redis"
     },
     {
       "name": "localstack",
       "image": "localstack/localstack:0.13",
-      "port": 4566,
       "env": {
         "DEBUG": 1,
         "SERVICES": "sqs,s3",
@@ -373,7 +378,6 @@
     {
       "name": "postgres",
       "build": ".docker/postgres",
-      "port": 5432,
       "env": {
         "POSTGRES_USER": "{{env.DATABASE_USERNAME}}",
         "POSTGRES_PASSWORD": "{{env.DATABASE_PASSWORD}}",
@@ -383,7 +387,6 @@
     {
       "name": "elasticsearch",
       "image": "elasticsearch:7.8.0",
-      "port": 9200,
       "env": {
         "node.name": "elasticsearch-dev",
         "discovery.type": "single-node",
