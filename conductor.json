@@ -12,7 +12,15 @@
     "AWS_REGION": "eu-west-2",
     "AWS_ACCOUNT_ID": "000000000000",
     "SQS_QUEUE": "asl-dev",
-    "S3_BUCKET": "asl-dev"
+    "S3_BUCKET": "asl-dev",
+    "SESSION_SECRET": "conductor",
+    "JWT_SECRET": "conductor",
+    "KEYCLOAK_REALM": "Asl-dev",
+    "KEYCLOAK_URL": "https://sso-dev.notprod.homeoffice.gov.uk/auth",
+    "KEYCLOAK_CLIENT": "asl-dev-connect",
+    "KEYCLOAK_USERNAME": "asl-resolver",
+    "KC_EXPORTS_USERNAME": "bot-data-exports",
+    "VERBOSE_ERRORS": "TRUE"
   },
   "services": [
     {
@@ -187,7 +195,7 @@
         "WORKFLOW_URL": "http://{{services.asl-workflow.host}}:{{services.asl-workflow.port}}",
         "PERMISSIONS_SERVICE": "http://{{services.asl-permissions.host}}:{{services.asl-permissions.port}}",
         "PDF_SERVICE": "http://{{services.html-pdf-converter.host}}:{{services.html-pdf-converter.port}}",
-        "ENABLE_PPL_CONVERSION": "'{{env.ENABLE_PPL_CONVERSION}}'"
+        "ENABLE_PPL_CONVERSION": "'TRUE'"
       }
     },
     {

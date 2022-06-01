@@ -13,20 +13,19 @@ To the best of my knowledge this only works with Docker for Mac because of how i
 First, create a local `.env` file with the following variables defined:
 
 ```
-# an arbitrary string
-SESSION_SECRET=
-# another arbitrary string
-JWT_SECRET=
-# authentication client parameters
-KEYCLOAK_REALM=
-KEYCLOAK_URL=
-KEYCLOAK_CLIENT=
+# secret for the asl-dev-connect keycloak OAuth client
 KEYCLOAK_SECRET=
-# AWS SES configuration
-EMAIL_FROM_ADDRESS=
-EMAIL_ACCESS_KEY=
-EMAIL_SECRET=
-EMAIL_REGION=
+
+# asl-resolver keycloak password
+KEYCLOAK_PASSWORD=
+
+# bot-data-exports keycloak password
+KC_EXPORTS_PASSWORD=
+
+# arbitrary 32 character hex string
+TRANSPORT_KEY=
+# arbitrary 16 character hex string
+TRANSPORT_IV=
 ```
 
 To spin up a default stack of all services:
