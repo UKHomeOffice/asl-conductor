@@ -12,6 +12,7 @@
     "asl-metrics": 8089,
     "asl-internal-search": 8090,
     "asl-public-search": 8091,
+    "asl-attachments": 8092,
     "redis": 6379,
     "localstack": 4566,
     "postgres": 5432,
@@ -336,6 +337,25 @@
         "KEYCLOAK_SECRET": "{{env.KEYCLOAK_SECRET}}",
         "ENABLE_GLOBAL_SEARCH": "'FALSE'",
         "ENABLE_INDEXER": "'FALSE'"
+      }
+    },
+    {
+      "name": "asl-attachments",
+      "image": "quay.io/ukhomeofficedigital/asl-attachments",
+      "links": [
+        "postgres",
+        "localstack"
+      ],
+      "env": {
+        "DATABASE_NAME": "{{env.DATABASE_NAME}}",
+        "DATABASE_USERNAME": "{{env.DATABASE_USERNAME}}",
+        "DATABASE_PASSWORD": "{{env.DATABASE_PASSWORD}}",
+        "DATABASE_HOST": "{{services.postgres.host}}",
+        "S3_REGION": "{{env.AWS_REGION}}",
+        "S3_ACCESS_KEY": "{{env.AWS_ACCESS_KEY}}",
+        "S3_SECRET": "{{env.AWS_SECRET}}",
+        "S3_BUCKET": "{{env.S3_BUCKET}}",
+        "S3_LOCALSTACK_URL": "http://{{services.localstack.host}}:{{services.localstack.port}}"
       }
     },
     {
