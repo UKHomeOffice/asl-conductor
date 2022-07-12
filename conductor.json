@@ -59,6 +59,7 @@
         "INTERNAL_URL": "http://localhost:{{services.asl-internal-ui.port}}",
         "JWT_SECRET": "{{env.JWT_SECRET}}",
         "PERMISSIONS_SERVICE": "http://{{services.asl-permissions.host}}:{{services.asl-permissions.port}}",
+        "ATTACHMENTS_SERVICE": "http://{{services.asl-attachments.host}}:{{services.asl-attachments.port}}",
         "PDF_SERVICE": "http://{{services.html-pdf-converter.host}}:{{services.html-pdf-converter.port}}"
       }
     },
@@ -208,6 +209,7 @@
         "METRICS_URL": "http://{{services.asl-metrics.host}}:{{services.asl-metrics.port}}",
         "WORKFLOW_URL": "http://{{services.asl-workflow.host}}:{{services.asl-workflow.port}}",
         "PERMISSIONS_SERVICE": "http://{{services.asl-permissions.host}}:{{services.asl-permissions.port}}",
+        "ATTACHMENTS_SERVICE": "http://{{services.asl-attachments.host}}:{{services.asl-attachments.port}}",
         "PDF_SERVICE": "http://{{services.html-pdf-converter.host}}:{{services.html-pdf-converter.port}}",
         "ENABLE_PPL_CONVERSION": "'TRUE'"
       }
