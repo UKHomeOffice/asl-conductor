@@ -257,6 +257,9 @@
     },
     {
       "name": "html-pdf-converter",
+      "links": [
+        "asl-attachments"
+      ],
       "env": {
         "BODY_SIZE_LIMIT": "5mb"
       }
