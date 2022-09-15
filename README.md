@@ -68,7 +68,7 @@ To use this feature, you will need a `GITHUB_ACCESS_TOKEN` defined in your env t
 npm start -- --ref=<commit hash>
 ```
 
-If there has been / could have been schema migrations since that ref, then you should drop the database and elasticsearch first:
+If there have been schema migrations since that ref, then you should drop the database and elasticsearch first:
 
 ```
 docker container rm -f asl-conductor-postgres-1 asl-conductor-elasticsearch-1
