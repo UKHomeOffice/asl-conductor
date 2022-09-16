@@ -76,6 +76,9 @@ npm start -- --ref=<commit hash>
 npm run seed
 ```
 
+Note that if you rollback far enough that the conductor config was significantly changed for a service, then all bets are
+off and you will probably find that it no-longer works.
+
 ## Troubleshooting
 
 This is _very_ hacky, and occasionally things fail because they started up in a funny order.
