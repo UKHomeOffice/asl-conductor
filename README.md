@@ -48,13 +48,50 @@ To run multiple services locally, simply pass multiple `--local` flags:
 npm start -- --local <service-name> --local <another-service-name>
 ```
 
-### Seeding data
+## Seeding data
 
 To populate the postgres database with dummy development data run `npm run seed`. You should only need to do this once.
 
 ## Offline-ish access
 
 Add a `--no-pull` flag to use the last-used image version and _hopefully_ prevent pulling new images from the internet.
+
+## Rolling back to an older stack
+
+By default, Conductor will attempt to pull the latest images for each service. To run a stack from an earlier point in time,
+you can specify a git ref or timestamp from the [asl-deployments](https://github.com/UKHomeOffice/asl-deployments/commits/master)
+repo, and it will attempt to pull the service images which were current then.
+
+To use this feature, you will need a `GITHUB_ACCESS_TOKEN` defined in your env that has read access to the deployments repo.
+
+Using a git ref:
+
+```
+npm start -- --ref=<commit hash>
+```
+
+Using a datetime:
+
+```
+npm start -- --at="2022-09-09 11:26:53"
+```
+
+Using just a date (defaults to last commit of the day):
+
+```
+npm start -- --at=2022-09-09
+```
+
+If there have been schema migrations since that ref, then you should drop the database and elasticsearch first:
+
+```
+docker container rm -f asl-conductor-postgres-1 asl-conductor-elasticsearch-1
+npm start -- --ref=<commit hash>
+npm run seed
+```
+
+Note that if you rollback far enough that the conductor config was significantly changed for a service, then all bets are
+off and you will probably find that it no-longer works.
 
 ## Troubleshooting
 
