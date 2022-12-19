@@ -28,6 +28,12 @@ TRANSPORT_KEY=
 TRANSPORT_IV=
 ```
 
+Install node modules. You should only need to do this once, or when npm dependencies have been modified.
+
+```
+npm install
+```
+
 To spin up a default stack of all services:
 
 ```
