@@ -30,7 +30,12 @@
     "yaml": "^2.1.1"
   },
   "devDependencies": {
-    "eslint": "^5.3.0",
-    "eslint-config-lennym": "^2.0.1"
+    "eslint": "^8.43.0",
+    "eslint-config-lennym": "^2.3.2"
+  },
+  "overrides": {
+    "eslint-config-lennym": {
+      "semver": "^7.5.3"
+    }
   }
 }
