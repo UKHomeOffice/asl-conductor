@@ -14,12 +14,10 @@ services:
       {{key}}: {{value}}
     {{/env}}
     {{/env.length}}
-    {{#links.length}}
-    links:
-    {{#links}}
-      - {{.}}
-    {{/links}}
-    {{/links.length}}
+    {{#network}}
+    networks:
+      - {{network}}
+    {{/network}}
     {{#port}}
     ports:
       - "{{port}}:{{port}}"
@@ -37,3 +35,6 @@ services:
     restart: {{restart}}
     {{/restart}}
 {{/services}}
+networks:
+  asl:
+    driver: "bridge"

@@ -130,3 +130,41 @@ Running some services with linked dependencies requires a workaround to ensure a
 A known good set of these dependencies is configured in the package.json and package-lock.json files in the `./common` directory of this repo.
 
 To install copy these into a directory that contains the `asl-*` repo directories and run `npm ci`.
+
+## Snapshot of postgres container
+
+Sometimes it is helpful to take a snapshot of the database container (or any other container which persists data).
+
+For example, you are debugging an end-to-end test which happens to be the last in its test suite, and relies on data created by 
+previous tests in the same suite (this is not good practice for tests, but unfortunately it's an inherited reality).
+Because this test relies on the previous tests in the same suite running successfully, this adds the overhead of having to run
+all previous tests, in that suite, before getting to the test you are focusing on. In this situation, it would be ideal to 
+have a snapshot of the data required by the last test, which corresponds to a snapshot of the database container taken immediately
+after all previous tests were executed
+
+### Taking the snapshot
+
+Use `docker commit` command to take a snapshot of the database container while running:
+`docker commit <postgres_container_id>  <image_name>:<tag>`
+
+`<image_name>` and `<tag>` are the image name and tag you choose for the to-be generated image 
+
+Example:
+`docker commit 36e9ae0c1ac6  aspel/postgres-snapshot:1.0.0`
+
+P.S. To allow data in database to be included in the docker container commit, it was necessary to override 
+postgres' `PGDATA` environment variable to a value different from the default `/var/lib/postgresql/data`. In
+our case, we used `/var/lib/postgresql/pgdata`
+
+
+### Using the snapshot
+
+Now you can start a new database container from the image created as a result of the `docker commit` command above. 
+Before starting the container from the snapshot image, don't forget to stop the original postgres container and delete it, 
+so that the container started from the snapshot can reuse the same container name.
+Also remember to pass on environment variables, including the overridden `PGDATA` value
+
+`docker run -d --name postgres -p 127.0.0.1:5432:5432/tcp --network=asl-conductor_asl --env POSTGRES_USER=postgres --env POSTGRES_PASSWORD=test-password --env POSTGRES_DATABASES=asl,asl-test,taskflow,taskflow-test --env PGDATA=/var/lib/postgresql/pgdata --env PORT=5432 aspel/postgres-snapshot:1.0.0`
+
+Note the `--network` setting referring to the same Docker network where other services are already hosted 
+so the new container is visible to them.
