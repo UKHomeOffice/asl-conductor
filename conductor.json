@@ -44,10 +44,7 @@
   "services": [
     {
       "name": "asl",
-      "links": [
-        "redis",
-        "asl-public-api"
-      ],
+      "network": "asl",
       "env": {
         "REDIS_HOST": "{{services.redis.host}}",
         "SESSION_SECRET": "{{env.SESSION_SECRET}}",
@@ -65,12 +62,7 @@
     },
     {
       "name": "asl-public-api",
-      "links": [
-        "postgres",
-        "asl-permissions",
-        "asl-workflow",
-        "asl-public-search"
-      ],
+      "network": "asl",
       "env": {
         "WORKFLOW_SERVICE": "http://{{services.asl-workflow.host}}:{{services.asl-workflow.port}}",
         "PERMISSIONS_SERVICE": "http://{{services.asl-permissions.host}}:{{services.asl-permissions.port}}",
@@ -89,9 +81,7 @@
     },
     {
       "name": "asl-permissions",
-      "links": [
-        "postgres"
-      ],
+      "network": "asl",
       "env": {
         "DATABASE_NAME": "{{env.DATABASE_NAME}}",
         "DATABASE_USERNAME": "{{env.DATABASE_USERNAME}}",
@@ -105,11 +95,7 @@
     },
     {
       "name": "asl-workflow",
-      "links": [
-        "localstack",
-        "postgres",
-        "asl-permissions"
-      ],
+      "network": "asl",
       "env": {
         "SQS_REGION": "{{env.AWS_REGION}}",
         "SQS_ACCESS_KEY": "{{env.AWS_ACCESS_KEY}}",
@@ -141,10 +127,7 @@
     },
     {
       "name": "asl-resolver",
-      "links": [
-        "localstack",
-        "postgres"
-      ],
+      "network": "asl",
       "env": {
         "DATABASE_NAME": "{{env.DATABASE_NAME}}",
         "DATABASE_USERNAME": "{{env.DATABASE_USERNAME}}",
@@ -175,9 +158,7 @@
     {
       "name": "asl-emailer",
       "image": "quay.io/ukhomeofficedigital/asl-stub",
-      "links": [
-        "postgres"
-      ],
+      "network": "asl",
       "env": {
         "DATABASE_NAME": "{{env.DATABASE_NAME}}",
         "DATABASE_USERNAME": "{{env.DATABASE_USERNAME}}",
@@ -187,12 +168,7 @@
     },
     {
       "name": "asl-internal-ui",
-      "links": [
-        "redis",
-        "asl-internal-api",
-        "asl-metrics",
-        "localstack"
-      ],
+      "network": "asl",
       "env": {
         "REDIS_HOST": "{{services.redis.host}}",
         "SESSION_SECRET": "{{env.SESSION_SECRET}}",
@@ -216,14 +192,7 @@
     },
     {
       "name": "asl-internal-api",
-      "links": [
-        "postgres",
-        "asl-permissions",
-        "asl-workflow",
-        "asl-public-api",
-        "asl-internal-search",
-        "asl-metrics"
-      ],
+      "network": "asl",
       "env": {
         "API_URL": "http://{{services.asl-public-api.host}}:{{services.asl-public-api.port}}",
         "WORKFLOW_SERVICE": "http://{{services.asl-workflow.host}}:{{services.asl-workflow.port}}",
@@ -242,10 +211,7 @@
     },
     {
       "name": "asl-notifications",
-      "links": [
-        "postgres",
-        "asl-emailer"
-      ],
+      "network": "asl",
       "env": {
         "DATABASE_NAME": "{{env.DATABASE_NAME}}",
         "DATABASE_USERNAME": "{{env.DATABASE_USERNAME}}",
@@ -257,18 +223,14 @@
     },
     {
       "name": "html-pdf-converter",
-      "links": [
-        "asl-attachments"
-      ],
+      "network": "asl",
       "env": {
         "BODY_SIZE_LIMIT": "5mb"
       }
     },
     {
       "name": "asl-metrics",
-      "links": [
-        "asl-workflow"
-      ],
+      "network": "asl",
       "env": {
         "KEYCLOAK_REALM": "{{env.KEYCLOAK_REALM}}",
         "KEYCLOAK_URL": "{{env.KEYCLOAK_URL}}",
@@ -288,9 +250,7 @@
     {
       "name": "asl-schema",
       "run": "sh -c 'npm run migrate'",
-      "links": [
-        "postgres"
-      ],
+      "network": "asl",
       "env": {
         "DATABASE_NAME": "{{env.DATABASE_NAME}}",
         "DATABASE_USERNAME": "{{env.DATABASE_USERNAME}}",
@@ -301,10 +261,7 @@
     {
       "name": "asl-internal-search",
       "image": "quay.io/ukhomeofficedigital/asl-search",
-      "links": [
-        "postgres",
-        "elasticsearch"
-      ],
+      "network": "asl",
       "env": {
         "ELASTIC_NODE": "http://{{services.elasticsearch.host}}:{{services.elasticsearch.port}}",
         "DATABASE_NAME": "{{env.DATABASE_NAME}}",
@@ -326,10 +283,7 @@
     {
       "name": "asl-public-search",
       "image": "quay.io/ukhomeofficedigital/asl-search",
-      "links": [
-        "postgres",
-        "elasticsearch"
-      ],
+      "network": "asl",
       "env": {
         "ELASTIC_NODE": "http://{{services.elasticsearch.host}}:{{services.elasticsearch.port}}",
         "DATABASE_NAME": "{{env.DATABASE_NAME}}",
@@ -346,10 +300,7 @@
     },
     {
       "name": "asl-attachments",
-      "links": [
-        "postgres",
-        "localstack"
-      ],
+      "network": "asl",
       "env": {
         "DATABASE_NAME": "{{env.DATABASE_NAME}}",
         "DATABASE_USERNAME": "{{env.DATABASE_USERNAME}}",
@@ -364,11 +315,13 @@
     },
     {
       "name": "redis",
-      "image": "redis:latest"
+      "image": "redis:latest",
+      "network": "asl"
     },
     {
       "name": "localstack",
       "image": "localstack/localstack:0.13",
+      "network": "asl",
       "env": {
         "DEBUG": 1,
         "SERVICES": "sqs,s3",
@@ -381,9 +334,7 @@
       "depends_on": [
         "localstack"
       ],
-      "links": [
-        "localstack"
-      ],
+      "network": "asl",
       "run": "--endpoint-url=http://{{services.localstack.host}}:{{services.localstack.port}} sqs create-queue --queue-name={{env.SQS_QUEUE}} --region={{env.AWS_REGION}} --no-sign-request --no-verify-ssl",
       "restart": "on-failure"
     },
@@ -393,24 +344,25 @@
       "depends_on": [
         "localstack"
       ],
-      "links": [
-        "localstack"
-      ],
+      "network": "asl",
       "run": "--endpoint-url=http://{{services.localstack.host}}:{{services.localstack.port}} s3api create-bucket --bucket={{env.S3_BUCKET}} --region={{env.AWS_REGION}} --no-sign-request --no-verify-ssl",
       "restart": "on-failure"
     },
     {
       "name": "postgres",
       "build": ".docker/postgres",
+      "network": "asl",
       "env": {
         "POSTGRES_USER": "{{env.DATABASE_USERNAME}}",
         "POSTGRES_PASSWORD": "{{env.DATABASE_PASSWORD}}",
-        "POSTGRES_DATABASES": "'{{env.DATABASE_NAME}},{{env.DATABASE_NAME_TEST}},{{env.WORKFLOW_DATABASE_NAME}},{{env.WORKFLOW_DATABASE_NAME_TEST}}'"
+        "POSTGRES_DATABASES": "'{{env.DATABASE_NAME}},{{env.DATABASE_NAME_TEST}},{{env.WORKFLOW_DATABASE_NAME}},{{env.WORKFLOW_DATABASE_NAME_TEST}}'",
+        "PGDATA": "/var/lib/postgresql/pgdata"
       }
     },
     {
       "name": "elasticsearch",
       "image": "elasticsearch:7.8.0",
+      "network": "asl",
       "env": {
         "node.name": "elasticsearch-dev",
         "discovery.type": "single-node",
@@ -419,10 +371,7 @@
     },
     {
       "name": "asl-data-exports",
-      "links": [
-        "postgres",
-        "asl-metrics"
-      ],
+      "network": "asl",
       "env": {
         "S3_REGION": "{{env.AWS_REGION}}",
         "S3_ACCESS_KEY": "{{env.AWS_ACCESS_KEY}}",
