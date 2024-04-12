@@ -40,8 +40,31 @@ To spin up a default stack of all services:
 npm start
 ```
 
-To spin up a stack of all but one service so you can run a development version of that locally:
+To spin up a local env of all services:
 
+```
+npm run conductor
+```
+Initialise docker image, spin container node server and provide the DB instance for migration and seeding.
+
+````
+npm run migrate
+````
+To create tables in the postgres DB
+
+```
+npm run seed
+```
+To populate some dummy data in the tables.
+
+
+````
+localhost:8080      
+````
+UI for ASPeL, find credentials here: https://collaboration.homeoffice.gov.uk/display/ASPEL/Important+Links+and+Credentials
+
+
+To spin up a stack of all but one service so you can run a development version of that locally:
 ```
 npm start -- --local <service-name>
 ```
@@ -135,10 +158,10 @@ To install copy these into a directory that contains the `asl-*` repo directorie
 
 Sometimes it is helpful to take a snapshot of the database container (or any other container which persists data).
 
-For example, you are debugging an end-to-end test which happens to be the last in its test suite, and relies on data created by 
+For example, you are debugging an end-to-end test which happens to be the last in its test suite, and relies on data created by
 previous tests in the same suite (this is not good practice for tests, but unfortunately it's an inherited reality).
 Because this test relies on the previous tests in the same suite running successfully, this adds the overhead of having to run
-all previous tests, in that suite, before getting to the test you are focusing on. In this situation, it would be ideal to 
+all previous tests, in that suite, before getting to the test you are focusing on. In this situation, it would be ideal to
 have a snapshot of the data required by the last test, which corresponds to a snapshot of the database container taken immediately
 after all previous tests were executed
 
@@ -147,24 +170,24 @@ after all previous tests were executed
 Use `docker commit` command to take a snapshot of the database container while running:
 `docker commit <postgres_container_id>  <image_name>:<tag>`
 
-`<image_name>` and `<tag>` are the image name and tag you choose for the to-be generated image 
+`<image_name>` and `<tag>` are the image name and tag you choose for the to-be generated image
 
 Example:
 `docker commit 36e9ae0c1ac6  aspel/postgres-snapshot:1.0.0`
 
-P.S. To allow data in database to be included in the docker container commit, it was necessary to override 
+P.S. To allow data in database to be included in the docker container commit, it was necessary to override
 postgres' `PGDATA` environment variable to a value different from the default `/var/lib/postgresql/data`. In
 our case, we used `/var/lib/postgresql/pgdata`
 
 
 ### Using the snapshot
 
-Now you can start a new database container from the image created as a result of the `docker commit` command above. 
-Before starting the container from the snapshot image, don't forget to stop the original postgres container and delete it, 
+Now you can start a new database container from the image created as a result of the `docker commit` command above.
+Before starting the container from the snapshot image, don't forget to stop the original postgres container and delete it,
 so that the container started from the snapshot can reuse the same container name.
 Also remember to pass on environment variables, including the overridden `PGDATA` value
 
 `docker run -d --name postgres -p 127.0.0.1:5432:5432/tcp --network=asl-conductor_asl --env POSTGRES_USER=postgres --env POSTGRES_PASSWORD=test-password --env POSTGRES_DATABASES=asl,asl-test,taskflow,taskflow-test --env PGDATA=/var/lib/postgresql/pgdata --env PORT=5432 aspel/postgres-snapshot:1.0.0`
 
-Note the `--network` setting referring to the same Docker network where other services are already hosted 
+Note the `--network` setting referring to the same Docker network where other services are already hosted
 so the new container is visible to them.
