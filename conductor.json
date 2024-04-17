@@ -315,7 +315,7 @@
     },
     {
       "name": "redis",
-      "image": "redis:latest",
+      "image": "redis:alpine",
       "network": "asl"
     },
     {
