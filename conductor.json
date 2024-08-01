@@ -316,7 +316,8 @@
     {
       "name": "redis",
       "image": "redis:alpine",
-      "network": "asl"
+      "network": "asl",
+      "tag": "infrastructure"
     },
     {
       "name": "localstack",
@@ -326,7 +327,8 @@
         "DEBUG": 1,
         "SERVICES": "sqs,s3",
         "SQS_PROVIDER": "elasticmq"
-      }
+      },
+      "tag": "infrastructure"
     },
     {
       "name": "create-sqs-queue",
@@ -336,7 +338,8 @@
       ],
       "network": "asl",
       "run": "--endpoint-url=http://{{services.localstack.host}}:{{services.localstack.port}} sqs create-queue --queue-name={{env.SQS_QUEUE}} --region={{env.AWS_REGION}} --no-sign-request --no-verify-ssl",
-      "restart": "on-failure"
+      "restart": "on-failure",
+      "tag": "infrastructure"
     },
     {
       "name": "create-s3-bucket",
@@ -346,7 +349,8 @@
       ],
       "network": "asl",
       "run": "--endpoint-url=http://{{services.localstack.host}}:{{services.localstack.port}} s3api create-bucket --bucket={{env.S3_BUCKET}} --region={{env.AWS_REGION}} --no-sign-request --no-verify-ssl",
-      "restart": "on-failure"
+      "restart": "on-failure",
+      "tag": "infrastructure"
     },
     {
       "name": "postgres",
@@ -357,7 +361,8 @@
         "POSTGRES_PASSWORD": "{{env.DATABASE_PASSWORD}}",
         "POSTGRES_DATABASES": "'{{env.DATABASE_NAME}},{{env.DATABASE_NAME_TEST}},{{env.WORKFLOW_DATABASE_NAME}},{{env.WORKFLOW_DATABASE_NAME_TEST}}'",
         "PGDATA": "/var/lib/postgresql/pgdata"
-      }
+      },
+      "tag": "infrastructure"
     },
     {
       "name": "elasticsearch",
@@ -367,7 +372,8 @@
         "node.name": "elasticsearch-dev",
         "discovery.type": "single-node",
         "ES_JAVA_OPTS": "-Xms128m -Xmx128m"
-      }
+      },
+      "tag": "infrastructure"
     },
     {
       "name": "asl-data-exports",

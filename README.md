@@ -64,7 +64,7 @@ localhost:8080
 UI for ASPeL, find credentials here: https://collaboration.homeoffice.gov.uk/display/ASPEL/Important+Links+and+Credentials
 
 
-To spin up a stack of all but one service so you can run a development version of that locally:
+To spin up a stack of all but one service, so you can run a development version of that locally:
 ```
 npm start -- --local <service-name>
 ```
@@ -75,6 +75,12 @@ To run multiple services locally, simply pass multiple `--local` flags:
 
 ```
 npm start -- --local <service-name> --local <another-service-name>
+```
+
+If you only need to start the infrastructure containers (redis, postgres, localstack), this can be done by passing the infrastructure tag:
+
+```bash
+npm start -- --tag infrastructure
 ```
 
 ## Seeding data
@@ -91,7 +97,7 @@ By default, Conductor will attempt to pull the latest images for each service. T
 you can specify a git ref or timestamp from the [asl-deployments](https://github.com/UKHomeOffice/asl-deployments/commits/master)
 repo, and it will attempt to pull the service images which were current then.
 
-To use this feature, you will need a `GITHUB_ACCESS_TOKEN` defined in your env that has read access to the deployments repo.
+To use this feature, you will need a `GITHUB_ACCESS_TOKEN` defined in your env that has read access to the asl-deployments repo.
 
 Using a git ref:
 
@@ -119,8 +125,8 @@ npm start -- --ref=<commit hash>
 npm run seed
 ```
 
-Note that if you rollback far enough that the conductor config was significantly changed for a service, then all bets are
-off and you will probably find that it no-longer works.
+Note that if you roll back far enough that the conductor config was significantly changed for a service, then all bets are
+off, and you will probably find that it no-longer works.
 
 ## Troubleshooting
 
@@ -134,13 +140,13 @@ Postgres will fail silently if it can't expose port 5432 (because you have a loc
 
 ## Options
 
-By default the config will be read from `./conductor.json` and a `docker-compose.yml` file will be written with the generated config. These can be overridden by passing options to the CLI.
+By default, the config will be read from `./conductor.json` and a `docker-compose.yml` file will be written with the generated config. These can be overridden by passing options to the CLI.
 
 ```
 npm run conductor -- alternative-input.json --out docker-compose-alt.yml
 ```
 
-`docker-compose` will run detached by default, to run undetached:
+`docker-compose` will run detached by default, to run un-detached:
 
 ```
 npm run conductor -- --no-detach
@@ -148,7 +154,7 @@ npm run conductor -- --no-detach
 
 ## Common dependencies
 
-Running some services with linked dependencies requires a workaround to ensure a single version of certain react components.
+Running some services with linked dependencies requires a workaround to ensure a single version of certain React components.
 
 A known good set of these dependencies is configured in the package.json and package-lock.json files in the `./common` directory of this repo.
 
@@ -175,8 +181,8 @@ Use `docker commit` command to take a snapshot of the database container while r
 Example:
 `docker commit 36e9ae0c1ac6  aspel/postgres-snapshot:1.0.0`
 
-P.S. To allow data in database to be included in the docker container commit, it was necessary to override
-postgres' `PGDATA` environment variable to a value different from the default `/var/lib/postgresql/data`. In
+P.S. To allow data in database to be included in the docker container commit, it was necessary to override the
+postgres `PGDATA` environment variable to a value different from the default `/var/lib/postgresql/data`. In
 our case, we used `/var/lib/postgresql/pgdata`
 
 

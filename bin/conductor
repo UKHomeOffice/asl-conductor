@@ -13,6 +13,11 @@ args.out = args.out || 'docker-compose.yml';
 args.pull = args.pull !== false;
 
 args.local = [].concat(args.local).filter(Boolean);
+if(args.tag) {
+    args.tags = [].concat(args.tag);
+}
+
+console.log(args)
 
 conductor(config, args)
   .catch(err => {
