@@ -223,6 +223,7 @@
     },
     {
       "name": "html-pdf-converter",
+      "image": "quay.io/ukhomeofficedigital/html-pdf-converter:v2.4.3",
       "network": "asl",
       "env": {
         "BODY_SIZE_LIMIT": "5mb"
