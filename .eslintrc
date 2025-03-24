@@ -1,2 +1,2 @@
 extends:
-  - @ukhomeoffice/asl
+  - "@ukhomeoffice/asl"
