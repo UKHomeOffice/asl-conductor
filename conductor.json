@@ -34,8 +34,8 @@
     "S3_BUCKET": "asl-dev",
     "SESSION_SECRET": "conductor",
     "JWT_SECRET": "conductor",
-    "KEYCLOAK_REALM": "Asl-dev",
-    "KEYCLOAK_URL": "https://sso-dev.notprod.homeoffice.gov.uk/auth",
+    "KEYCLOAK_REALM": "asl-dev",
+    "KEYCLOAK_URL": "https://acp-sso.notprod.acp.homeoffice.gov.uk",
     "KEYCLOAK_CLIENT": "asl-dev-connect",
     "KEYCLOAK_USERNAME": "asl-resolver",
     "KC_EXPORTS_USERNAME": "bot-data-exports",
@@ -397,6 +397,21 @@
         "KEYCLOAK_SECRET": "{{env.KEYCLOAK_SECRET}}",
         "KEYCLOAK_USERNAME": "{{env.KC_EXPORTS_USERNAME}}",
         "KEYCLOAK_PASSWORD": "{{env.KC_EXPORTS_PASSWORD}}"
+      }
+    },
+    {
+      "name": "asl-toolbox",
+      "network": "asl",
+      "image": "340268328991.dkr.ecr.eu-west-2.amazonaws.com/asl/toolbox:latest",
+      "env": {
+        "DATA_DB_HOST": "{{services.postgres.host}}",
+        "DATA_DB_NAME": "{{env.DATABASE_NAME}}",
+        "DATA_DB_RW_USERNAME": "{{env.DATABASE_USERNAME}}",
+        "DATA_DB_RW_PASSWORD": "{{env.DATABASE_PASSWORD}}",
+        "TASKFLOW_DB_HOST": "{{services.postgres.host}}",
+        "TASKFLOW_DB_NAME": "{{env.WORKFLOW_DATABASE_NAME}}",
+        "TASKFLOW_DB_RW_USERNAME": "{{env.WORKFLOW_DATABASE_USERNAME}}",
+        "TASKFLOW_DB_RW_PASSWORD": "{{env.DATABASE_PASSWORD}}"
       }
     }
   ]
