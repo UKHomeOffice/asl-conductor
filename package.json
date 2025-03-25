@@ -11,7 +11,7 @@
     "migrate": "docker compose run --rm asl-schema sh -c 'npm run migrate' && docker compose run --rm asl-workflow npm run migrate",
     "seed": "docker compose run --rm asl-schema sh -c 'npm run seed' && docker compose run --rm asl-workflow npm run seed",
     "preseed": "npm run migrate",
-    "build-search-index": "docker compose run --rm asl-internal-search sh -c 'npm run indexer -- --reset'",
+    "build-search-index": "docker-compose run --rm asl-internal-search sh -c 'npm run indexer -w asl-search -- --reset'",
     "postseed": "npm run build-search-index",
     "test": "eslint ."
   },
