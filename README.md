@@ -34,16 +34,30 @@ Install node modules. You should only need to do this once, or when npm dependen
 npm install
 ```
 
-Troubleshooting: If you get an error about `ecr` when running `npm install`, you may need to setup `ecr`:
-Its because ACP is now moving to ECR from Quay.io, so you need to follow the steps mentioned in the below link to 
-get the authorisation token and login to ECR.
-```
+### Troubleshooting: 
+If you get an error about `ecr` when running `npm install` or `npm start`, you may need to set up 
+`ecr`: It's because ACP is now moving to ECR from Quay.io, so you need to follow the steps mentioned in the below link 
+to get the authorisation token and login to ECR.
+
 https://docs.acp.homeoffice.gov.uk/how-to/ecr/
 
 - https://docs.acp.homeoffice.gov.uk/how-to/ecr/#step-1-retrieve-an-authorisation-token
 - https://docs.acp.homeoffice.gov.uk/how-to/ecr/#step-2-login-with-authorisation-token
-- npm install
+
+Note that the login command in the linked documents is for aws cli v1. If you are on v2, the following one-liner will 
+log you in:
+
+```shell
+aws ecr get-login-password --region eu-west-2 | docker login --username AWS --password-stdin 340268328991.dkr.ecr.eu-west-2.amazonaws.com
 ```
+
+then run 
+
+```shell
+npm install
+npm start
+```
+
 
 To spin up a default stack of all services:
 
