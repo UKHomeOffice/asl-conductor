@@ -34,6 +34,17 @@ Install node modules. You should only need to do this once, or when npm dependen
 npm install
 ```
 
+Troubleshooting: If you get an error about `ecr` when running `npm install`, you may need to setup `ecr`:
+Its because ACP is now moving to ECR from Quay.io, so you need to follow the steps mentioned in the below link to 
+get the authorisation token and login to ECR.
+```
+https://docs.acp.homeoffice.gov.uk/how-to/ecr/
+
+- https://docs.acp.homeoffice.gov.uk/how-to/ecr/#step-1-retrieve-an-authorisation-token
+- https://docs.acp.homeoffice.gov.uk/how-to/ecr/#step-2-login-with-authorisation-token
+- npm install
+```
+
 To spin up a default stack of all services:
 
 ```
