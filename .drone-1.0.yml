@@ -4,10 +4,13 @@ name: default
 type: kubernetes
 steps:
   - name: install
-    image: node:18
+    image: node:22.14.0
+    environment:
+      GITHUB_AUTH_TOKEN:
+        from_secret: GITHUB_AUTH_TOKEN
     commands:
       - npm ci
   - name: test
-    image: node:18
+    image: node:22.14.0
     commands:
       - npm test
