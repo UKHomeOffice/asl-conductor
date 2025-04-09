@@ -250,7 +250,7 @@
     },
     {
       "name": "asl-schema",
-      "run": "sh -c 'npm run migrate'",
+      "run": "sh -c 'npm run -w @asl/schema migrate'",
       "network": "asl",
       "env": {
         "DATABASE_NAME": "{{env.DATABASE_NAME}}",
