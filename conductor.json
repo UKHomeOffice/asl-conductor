@@ -322,7 +322,7 @@
     },
     {
       "name": "localstack",
-      "image": "localstack/localstack:latest",
+      "image": "localstack/localstack:0.13",
       "pull_policy": "never",
       "network": "asl",
       "env": {
