@@ -2,15 +2,38 @@
 
 A utility to orchestrate a local cluster of microservices
 
-## Dependencies
+# Prerequisites
+A checklist to get you started with conductor.
 
+- Docker 
 This will require `docker-compose` to be installed and on your `$PATH`.
 
-To the best of my knowledge this only works with Docker for Mac because of how it routes to host services.
+- MAC ARM
+If you are using a MAC with an ARM processor, you may need to set the following environment variable to ensure that
+docker pulls the correct architecture images, ASPeL don't have ARM images for all services yet. However, we have a hacky workaround.
+``` shell
+export DOCKER_DEFAULT_PLATFORM=linux/amd64
+```
 
-## Usage
+- AWSProfile 
+setup with necessary permissions to pull images from ECR. To do this, you need to configure AWS CLI with `aws configure --profile <profile-name> `
+[ACP HUB](https://hub.acp.homeoffice.gov.uk) has the AWS credentials you need.
+```shell
+aws configure --profile acp-ecr
+```
 
-First, create a local `.env` file with the following variables defined:
+- ECR login
+To login to ECR, run the following command to get the token:
+```shell
+aws ecr get-login-password --region eu-west-2 --profile acp-ecr
+```
+then copy the output and run the docker login i.e: 
+` 
+docker login -u AWS -p eyJwY ....... (all the way to end= https://xxxxxxxxxxxxxxxxx.dkr.ecr.eu-west-2.amazonaws.com
+)
+`
+
+- Create a local `.env` file with the following variables defined:
 
 ```
 # secret for the asl-dev-connect keycloak OAuth client
@@ -28,37 +51,27 @@ TRANSPORT_KEY=
 TRANSPORT_IV=
 ```
 
-Install node modules. You should only need to do this once, or when npm dependencies have been modified.
-
-```
-npm install
-```
-
-### Troubleshooting: 
-If you get an error about `ecr` when running `npm install` or `npm start`, you may need to set up 
-`ecr`: It's because ACP is now moving to ECR from Quay.io, so you need to follow the steps mentioned in the below link 
-to get the authorisation token and login to ECR.
-
-https://docs.acp.homeoffice.gov.uk/how-to/ecr/
-
-- https://docs.acp.homeoffice.gov.uk/how-to/ecr/#step-1-retrieve-an-authorisation-token
-- https://docs.acp.homeoffice.gov.uk/how-to/ecr/#step-2-login-with-authorisation-token
-
-Note that the login command in the linked documents is for aws cli v1. If you are on v2, the following one-liner will 
-log you in:
-
-```shell
-aws ecr get-login-password --region eu-west-2 | docker login --username AWS --password-stdin 340268328991.dkr.ecr.eu-west-2.amazonaws.com
-```
-
-then run 
+- Install node modules. You should only need to do this once, or when npm dependencies have been modified.
 
 ```shell
 npm install
-npm start
 ```
 
+- LOCALSTACK
+It's not available to Home office dockerhub, so you need to pull it manually once. 
+  - Logout of docker desktop if you are logged in.
+  - run the following command to pull localstack image:
+```shell
+docker pull localstack/localstack
+```
+ - log in back to docker desktop.
+conductor.json has a configuration to use localstack for AWS services emulation, we have set no pull policy for localstack 
+image to avoid pulling from dockerhub when you are logged in to docker hub.
 
+
+
+- - -
+# Script commands
 To spin up a default stack of all services:
 
 ```
@@ -82,31 +95,41 @@ npm run seed
 ```
 To populate some dummy data in the tables.
 
+```
+npm run postseed
+```
+_Not needed as the seed cmd should do the job. But in case you see UI without data, run this command after running seed.
+To populate some additional data in the tables after seeding, this will build indexes.
 
 ````
-localhost:8080      
+localhost:8080  |   localhost:8085     
 ````
 UI for ASPeL, find credentials here: https://collaboration.homeoffice.gov.uk/display/ASPEL/Important+Links+and+Credentials
-
-
-To spin up a stack of all but one service, so you can run a development version of that locally:
+- - -
+# Running service in IDE and Docker
+These configuration allow you to develop a service locally in your IDE, while running the rest of the stack in docker. To spin up a stack of all but one service, so you can run a development version of that locally:
 ```
 npm start -- --local <service-name>
+```
+For example, to run `asl` (the UI server for establishment users) and `asl-internal-ui` (the UI server for ASRU users) locally:
+```shell
+npm start -- --local asl --local asl-internal-ui
 ```
 
 _Note: you will need to make sure that the local service is configured to use the docker versions of everything else - i.e. hosts and ports are set to match those in the docker compose config._
 
 To run multiple services locally, simply pass multiple `--local` flags:
-
 ```
 npm start -- --local <service-name> --local <another-service-name>
 ```
 
 If you only need to start the infrastructure containers (redis, postgres, localstack), this can be done by passing the infrastructure tag:
-
-```bash
+```shell
 npm start -- --tag infrastructure
 ```
+
+
+- - -
 
 ## Seeding data
 
@@ -153,7 +176,32 @@ npm run seed
 Note that if you roll back far enough that the conductor config was significantly changed for a service, then all bets are
 off, and you will probably find that it no-longer works.
 
-## Troubleshooting
+- - -
+
+# Troubleshooting:
+
+### ECR issues
+If you get an error about `ecr` when running `npm install` or `npm start`, you may need to set up
+`ecr`: It's because ACP is now moving to ECR from Quay.io, so you need to follow the steps mentioned in the below link
+to get the authorisation token and login to ECR.
+
+https://docs.acp.homeoffice.gov.uk/how-to/ecr/
+
+- https://docs.acp.homeoffice.gov.uk/how-to/ecr/#step-1-retrieve-an-authorisation-token
+- https://docs.acp.homeoffice.gov.uk/how-to/ecr/#step-2-login-with-authorisation-token
+
+Note that the login command in the linked documents is for aws cli v1. If you are on v2, the following one-liner will
+log you in:
+
+```shell
+aws ecr get-login-password --region eu-west-2 | docker login --username AWS --password-stdin 340268328991.dkr.ecr.eu-west-2.amazonaws.com
+```
+
+### Firewall issues
+error like: `failed to copy: httpReadSeeker: failed open: failed to do request: Get "https://quay.io/v2/ukhomeofficedigital...`
+- Check if your machine is behind a firewall.
+- Are you on ACP VPN? If not then connect to ACP VPN and try again.
+- Change the network you are connect to, i.e use mobile hotspot/ office network etc.
 
 This is _very_ hacky, and occasionally things fail because they started up in a funny order.
 

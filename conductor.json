@@ -323,6 +323,7 @@
     {
       "name": "localstack",
       "image": "localstack/localstack:0.13",
+      "pull_policy": "never",
       "network": "asl",
       "env": {
         "DEBUG": 1,
