@@ -2,7 +2,7 @@
 
 A utility to orchestrate a local cluster of microservices
 
-# pre-requisites
+# Prerequisites
 A checklist to get you started with conductor.
 
 - Docker 
@@ -70,8 +70,7 @@ image to avoid pulling from dockerhub when you are logged in to docker hub.
 
 
 
-________________________________________________________________________________________________________________________________________________
-
+- - -
 # Script commands
 To spin up a default stack of all services:
 
@@ -99,22 +98,22 @@ To populate some dummy data in the tables.
 ```
 npm run postseed
 ```
+_Not needed as the seed cmd should do the job. But in case you see UI without data, run this command after running seed.
 To populate some additional data in the tables after seeding, this will build indexes.
 
 ````
 localhost:8080  |   localhost:8085     
 ````
 UI for ASPeL, find credentials here: https://collaboration.homeoffice.gov.uk/display/ASPEL/Important+Links+and+Credentials
-_________________________________________________________________________________________________________________________________________________
-
+- - -
 # Running service in IDE and Docker
 These configuration allow you to develop a service locally in your IDE, while running the rest of the stack in docker. To spin up a stack of all but one service, so you can run a development version of that locally:
 ```
 npm start -- --local <service-name>
 ```
-For example, to run the `asl` locally:
+For example, to run `asl` (the UI server for establishment users) and `asl-internal-ui` (the UI server for ASRU users) locally:
 ```shell
-npm start -- --local asl
+npm start -- --local asl --local asl-internal-ui
 ```
 
 _Note: you will need to make sure that the local service is configured to use the docker versions of everything else - i.e. hosts and ports are set to match those in the docker compose config._
@@ -130,8 +129,7 @@ npm start -- --tag infrastructure
 ```
 
 
-__________________________________________________________________________________________________________________________________________________
-
+- - -
 
 ## Seeding data
 
@@ -178,8 +176,8 @@ npm run seed
 Note that if you roll back far enough that the conductor config was significantly changed for a service, then all bets are
 off, and you will probably find that it no-longer works.
 
+- - -
 
-_________________________________________________________________________________________________________________________________________________
 # Troubleshooting:
 
 ### ECR issues
