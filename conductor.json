@@ -334,7 +334,7 @@
     },
     {
       "name": "localstack",
-      "image": "localstack/localstack:3.0",
+      "image": "localstack/localstack:3.6",
       "network": "asl",
       "env": {
         "DEBUG": 1,
@@ -344,12 +344,16 @@
     },
     {
       "name": "create-sqs-queue",
-      "image": "amazon/aws-cli:2.4.6",
+      "image": "amazon/aws-cli:2.15.0",
       "depends_on": [
         "localstack"
       ],
       "network": "asl",
-      "run": "--endpoint-url=http://{{services.localstack.host}}:{{services.localstack.port}} sqs create-queue --queue-name={{env.SQS_QUEUE}} --region={{env.AWS_REGION}} --no-sign-request --no-verify-ssl",
+      "env": {
+        "AWS_REGION": "{{env.AWS_REGION}}",
+        "AWS_DEFAULT_REGION": "{{env.AWS_REGION}}"
+      },
+      "run": "sqs create-queue --endpoint-url=http://{{services.localstack.host}}:{{services.localstack.port}} --queue-name={{env.SQS_QUEUE}} --region={{env.AWS_REGION}} --no-sign-request",
       "restart": "on-failure",
       "tag": "infrastructure"
     },
