@@ -334,7 +334,7 @@
     },
     {
       "name": "localstack",
-      "image": "localstack/localstack:3.6",
+      "image": "localstack/localstack:latest",
       "network": "asl",
       "env": {
         "DEBUG": 1,
