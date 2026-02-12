@@ -342,7 +342,8 @@
         "AWS_SECRET_ACCESS_KEY": "{{env.AWS_SECRET}}",
         "AWS_DEFAULT_REGION": "{{env.AWS_REGION}}"
       },
-      "run": "--endpoint-url=http://{{services.localstack.host}}:{{services.localstack.port}} sqs create-queue --queue-name={{env.SQS_QUEUE}} --region={{env.AWS_REGION}} --no-sign-request --no-verify-ssl","restart": "on-failure",
+      "run": "sqs create-queue --queue-name={{env.SQS_QUEUE}} --endpoint-url=http://{{services.localstack.host}}:{{services.localstack.port}}  --region={{env.AWS_REGION}}",
+      "restart": "on-failure",
       "tag": "infrastructure"
     },
     {
