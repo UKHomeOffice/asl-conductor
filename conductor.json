@@ -322,24 +322,27 @@
     },
     {
       "name": "localstack",
-      "image": "localstack/localstack:0.13",
+      "image": "localstack/localstack:latest",
       "network": "asl",
       "env": {
         "DEBUG": 1,
-        "SERVICES": "sqs,s3",
-        "SQS_PROVIDER": "elasticmq"
+        "SERVICES": "sqs,s3"
       },
       "tag": "infrastructure"
     },
     {
       "name": "create-sqs-queue",
-      "image": "amazon/aws-cli:2.4.6",
+      "image": "amazon/aws-cli:2.32.11",
       "depends_on": [
         "localstack"
       ],
       "network": "asl",
-      "run": "--endpoint-url=http://{{services.localstack.host}}:{{services.localstack.port}} sqs create-queue --queue-name={{env.SQS_QUEUE}} --region={{env.AWS_REGION}} --no-sign-request --no-verify-ssl",
-      "restart": "on-failure",
+      "env": {
+        "AWS_ACCESS_KEY_ID": "{{env.AWS_ACCESS_KEY}}",
+        "AWS_SECRET_ACCESS_KEY": "{{env.AWS_SECRET}}",
+        "AWS_DEFAULT_REGION": "{{env.AWS_REGION}}"
+      },
+      "run": "--endpoint-url=http://{{services.localstack.host}}:{{services.localstack.port}} sqs create-queue --queue-name={{env.SQS_QUEUE}} --region={{env.AWS_REGION}} --no-sign-request --no-verify-ssl","restart": "on-failure",
       "tag": "infrastructure"
     },
     {
