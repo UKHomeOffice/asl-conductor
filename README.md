@@ -108,6 +108,15 @@ If you only need to start the infrastructure containers (redis, postgres, locals
 npm start -- --tag infrastructure
 ```
 
+## Docker platform
+
+By default, the services in the compose file will be configured with `platform: linux/amd64` as that is the only 
+platform images are published for. If you need to run with a different platform you can set this in the .env file e.g.
+
+```shell
+DOCKER_PLATFORM=linux/arm64
+```
+
 ## Seeding data
 
 To populate the postgres database with dummy development data run `npm run seed`. You should only need to do this once.
